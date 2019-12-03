@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Forgot password</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  </head>
+  <body>
+    <h1>Forgot Password</h1>
+    <form action="./passUpdate.html" onsubmit="return checkAvailabilty()">
+      <div class="row">
+        <div class="input-field col s4">
+          <input type="email" id="email" class="validate" />
+          <label for="email">Enter your Email Address</label>
+          <p class="emailRes"></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s4">
+          <input type="text" id="userName" class="validate" />
+          <label for="userName">Enter your Username</label>
+          <p class="unRes"></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s4"><button class="btn">Reset Password</button></div>
+      </div>
+    </form>
+  </body>
+  <script src="app.js"></script>
+</html>

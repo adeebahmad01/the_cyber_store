@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Update Password</title>
+  <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+<body>
+  <h1>Reset Password</h1>  
+  <form action="/Login/index.html" onsubmit="return updatePass()">
+    <div class="row">
+        <div class="input-field col s4">
+          <input type="password" id="pass" class="validate" />
+          <label for="pass">Enter new password</label>
+          <p class="pRes"></p>
+        </div>
+      </div>
+    <div class="row">
+        <div class="input-field col s4">
+          <input type="password" id="cfpass" class="validate" />
+          <label for="cfpass">Re-enter new password</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s4"><button class="btn">Reset</button></div>
+      </div>
+  </form>
+</body>
+<script>
+  const passUpdateUsers = JSON.parse(localStorage.getItem("users")) === null ? [] : JSON.parse(localStorage.getItem("users"));
+  const i = +localStorage.getItem('resetPassIndex');
+  localStorage.removeItem('resetPassIndex')
+  const updatePass = ()=>{
+    if(document.querySelector('#pass').value === document.querySelector('#cfpass').value){
+      passUpdateUsers[i].password = document.querySelector('#pass').value;
+      localStorage.setItem('users', JSON.stringify(passUpdateUsers));
+      return true
+    }
+    else{
+      document.querySelector('.pRes').innerHTML = `Password didn't match`;
+      return false
+    }
+  }
+</script>
+</html>

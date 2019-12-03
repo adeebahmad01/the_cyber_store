@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <title>Sign Up</title>
+  </head>
+  <body>
+    <h1>Sign Up</h1>
+    <form class="form col s8" action="../Login/index.html" onsubmit="return signupFunctions.userAdd()">
+      <div class="row">
+        <div class="input-field col s4">
+          <input class="validate" required type="text" id="first_name" />
+          <label for="first_name">First Name</label>
+        </div>
+        <div class="input-field col s4">
+          <input id="last_name" type="text" class="validate" />
+          <label for="last_name">Last Name</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s4">
+          <input required type="text" class="validate" id="userName" />
+          <label for="userName">Username</label>
+          <p
+            class="uRes"
+            style="color: red; transition: all 0.5s; height: 4px; opacity: 0;"
+          ></p>
+        </div>
+        <div class="input-field col s4">
+          <input required type="email" id="email" />
+          <label for="email">Email</label>
+          <p
+            class="eRes"
+            style="color: red; transition: all 0.5s; height: 4px; opacity: 0;"
+          ></p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s4">
+          <input id="password" type="password" class="validate" />
+          <label for="password">Password</label>
+          <p
+            class="pRes"
+            style="color: red; transition: all 0.5s; height: 4px; opacity: 0;"
+          ></p>
+        </div>
+        <div class="input-field col s4">
+          <input
+            required
+            type="password"
+            class="validate"
+            name="password"
+            id="passConfirm"
+          />
+          <label for="passConfirm">Confirm Password</label>
+          <p
+            class="cpRes"
+            style="color: red; transition: all 0.5s; height: 4px; opacity: 0;"
+          ></p>
+        </div>
+      </div>
+      <div class="row">
+          <div class="input-field col s4">
+            <input required type="text" id="address"/>
+            <label for="address">Address</label>
+            </div>
+            <div class="input-field col s4">
+              <input required type="text" id="city"/>
+              <label for="city">City</label>
+            </div>
+            <div class="input-field col s4">
+              <input type="text" id="country"/>
+              <label for="country">Country</label>
+            </div>
+      </div>
+      <button class="signup btn">Sign Up</button>
+    </form>
+  </body>
+  <script src="app.js"></script>
+</html>
