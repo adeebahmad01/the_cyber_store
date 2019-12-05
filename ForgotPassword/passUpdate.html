@@ -34,10 +34,14 @@
 </body>
 <script>
   const passUpdateUsers = JSON.parse(localStorage.getItem("users")) === null ? [] : JSON.parse(localStorage.getItem("users"));
-  const i = +localStorage.getItem('resetPassIndex');
+  let i;
+  if(localStorage.getItem('resetPassIndex') !== null){
+    i = +localStorage.getItem('resetPassIndex');
+  }
   localStorage.removeItem('resetPassIndex')
   const updatePass = ()=>{
-    if(document.querySelector('#pass').value === document.querySelector('#cfpass').value){
+    try{
+      if(document.querySelector('#pass').value === document.querySelector('#cfpass').value){
       passUpdateUsers[i].password = document.querySelector('#pass').value;
       localStorage.setItem('users', JSON.stringify(passUpdateUsers));
       return true
@@ -46,6 +50,26 @@
       document.querySelector('.pRes').innerHTML = `Password didn't match`;
       return false
     }
+    }
+    catch(error){
+      document.querySelector('.pRes').innerHTML = `Error loading user please try again`;
+      return false
+    }
   }
+  const checkReferrer = ()=>{
+  const href = location.href.split('/');
+  const href2 = location.href.split('/');
+  href.pop()
+  href.push('index.html')
+  href2.pop()
+  href2.push('')
+  if(document.referrer !== href.join('/') && document.referrer !== href2.join('/')){
+    document.body.innerHTML = '<h1>You are not allowed to use this page</h1>'
+    setTimeout(()=> {
+      location.replace(href.join('/')) 
+    }, 5000)
+  }
+}
+checkReferrer()
 </script>
 </html>

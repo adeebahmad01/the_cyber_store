@@ -1,4 +1,5 @@
 //! Getting Array From
+localStorage.removeItem('userIndex')
 const loginUsers =
   JSON.parse(localStorage.getItem("users")) === null
     ? []
@@ -15,6 +16,7 @@ const loginElements ={
 const checkArray = () =>{
   if (emailArr.includes(loginElements.email.value)) {
     let index = emailArr.indexOf(loginElements.email.value);
+    localStorage.setItem('userIndex', index)
     return checkPassword(loginElements.password.value,index,passwords);
   }
   else{

@@ -1,0 +1,30 @@
+.waves-effect {
+  padding: 1rem 0;
+  background: none;
+  width: 100%;
+  border: none;
+}
+.sidenav-trigger {
+  margin: 1rem;
+}
+
+.waves-effect:hover {
+  background: #ddd;
+}
+
+.fade {
+  opacity: 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.block {
+  display: block;
+}
+
+.col {
+  opacity: 1;
+  transition: all 0.5s;
+}
