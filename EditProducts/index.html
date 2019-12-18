@@ -11,29 +11,30 @@
   </head>
   <body>
     <h1>Edit your products</h1>
-    <form class="" action="">
+    <form class="" action="../ProductInfo/index.html">
+      <input type="text" class="id" name="id" style="display: none;">
       <div class="row">
         <div class="row">
           <div class="input-field col s3">
-            <input required class="validate" type="text" name="" id="title" />
+            <input type="text" name="" id="title" />
             <label for="title">Title</label>
           </div>
           <div class="input-field col s3">
-            <input required class="validate" type="text" name="" id="features" />
+            <input type="text" name="" id="features" />
             <label for="features">Features</label>
           </div>
           <div class="input-field col s3">
-            <input required class="validate" type="text" name="" id="price" />
+            <input type="text" name="" id="price" />
             <label for="price">Price</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s4">
-            <input required class="validate" type="text" name="" id="catagory">
+            <input type="text" name="" id="catagory">
             <label for="catagory">Catagory</label>
           </div>
           <div class="input-field col s4">
-            <textarea required id="description" class="materialize-textarea"></textarea>
+            <textarea id="description" class="materialize-textarea"></textarea>
             <label for="description">Description</label>
           </div>
         </div>
@@ -41,10 +42,10 @@
           <div class="file-field input-field ">
             <div class="btn">
               <span>File</span>
-              <input required type="file" class="uploadFile validate" />
+              <input type="file" class="uploadFile" />
             </div>
             <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" />
+              <input class="file-path" type="text" />
             </div>
           </div>
           <button class="btn">Add product</button>
