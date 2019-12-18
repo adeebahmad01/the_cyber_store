@@ -12,19 +12,6 @@
   background: #ddd;
 }
 
-.fade {
-  opacity: 0;
-}
-
 .hidden {
   display: none !important;
-}
-
-.block {
-  display: block;
-}
-
-.col {
-  opacity: 1;
-  transition: all 0.5s;
 }

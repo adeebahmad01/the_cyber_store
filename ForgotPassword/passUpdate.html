@@ -33,29 +33,47 @@
   </form>
 </body>
 <script>
+  //`Getting Array of users from localStorage`
   const passUpdateUsers = JSON.parse(localStorage.getItem("users")) === null ? [] : JSON.parse(localStorage.getItem("users"));
+
+  //Index comming from Email check Page
   let i;
+
   if(localStorage.getItem('resetPassIndex') !== null){
+    //Setting Index
     i = +localStorage.getItem('resetPassIndex');
+  }else{
+    //If there is no index
+    document.body.innerHTML = `<h1>You are not allowed to use this page</h1>`;
   }
+
+  //Remove index
   localStorage.removeItem('resetPassIndex')
+
+  // Update Password
   const updatePass = ()=>{
     try{
+
       if(document.querySelector('#pass').value === document.querySelector('#cfpass').value){
-      passUpdateUsers[i].password = document.querySelector('#pass').value;
-      localStorage.setItem('users', JSON.stringify(passUpdateUsers));
-      return true
-    }
-    else{
-      document.querySelector('.pRes').innerHTML = `Password didn't match`;
-      return false
-    }
+        // set the value in array equal to input & Save it in localstorage
+        passUpdateUsers[i].password = document.querySelector('#pass').value;
+        localStorage.setItem('users', JSON.stringify(passUpdateUsers));
+        return true
+      }
+      else{
+        //if pass and confirm password values are not same
+        document.querySelector('.pRes').innerHTML = `Password didn't match`;
+        return false
+      }
     }
     catch(error){
+      //if there is any type of error
       document.querySelector('.pRes').innerHTML = `Error loading user please try again`;
       return false
     }
   }
+
+  // Additional Restriction function
   const checkReferrer = ()=>{
   const href = location.href.split('/');
   const href2 = location.href.split('/');

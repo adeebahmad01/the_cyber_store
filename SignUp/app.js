@@ -39,9 +39,7 @@ class User {
     this.city = city;
     this.country = country;
     this.dateReg = new Date();
-    this.id = Math.random()
-      .toString(36)
-      .substr(2, 9);
+    this.id = Math.random().toString(36).substr(2, 9);
   }
 }
 
