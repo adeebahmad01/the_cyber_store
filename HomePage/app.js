@@ -1,10 +1,25 @@
 import html from '../utils/card.js'
 let rowId = 0;
 let rowIdHtml = 0;
-
+const cart = JSON.parse(localStorage.getItem('cart')) || [];
 const equalHeight = (parent)=>{
-  setTimeout(()=> setTimeout(() => document.querySelectorAll(`${parent} .card-image`).forEach(el=> el.style.height = `${Math.max(...Array.from(document.querySelectorAll(`${parent} img`)).map(el=> el.offsetHeight))+20}px`), 50),200)
-  setTimeout(()=>setTimeout(() => document.querySelectorAll(`${parent} .card-content`).forEach(el=> el.style.height = `${Math.max(...Array.from(document.querySelectorAll(`${parent} .card-content`)).map(el=> el.offsetHeight))}px`), 50),200)
+  setTimeout(()=>{
+    const heights = Array.from(document.querySelectorAll(`${parent} img`)).map(el=> el.offsetHeight)
+    let maxHeight
+    setTimeout(() => {
+      maxHeight = Math.max(...heights)
+      document.querySelectorAll(`${parent} .card-image`).forEach(el=> el.style.height = `${maxHeight+20}px`)
+    }, 50);
+  },200)
+  setTimeout(()=>{
+    const heights = Array.from(document.querySelectorAll(`${parent} .card-content`)).map(el=> el.offsetHeight)
+    let maxHeight
+    setTimeout(() => {
+      maxHeight = Math.max(...heights)
+      document.querySelectorAll(`${parent} .card-content`).forEach(el=> el.style.height = `${maxHeight+20}px`)
+    }, 50);
+  },200);
+  
 }
 
 const products = JSON.parse(localStorage.getItem("productIntro"));
@@ -76,4 +91,44 @@ newProducts.forEach(el => {
   a===3? rowIdHtml++:``
   htmlElement.insertAdjacentHTML("beforeend", newHtml);
 });
-equalHeight(`.catagory`)
+equalHeight(`.catagory`);
+
+
+const cartBtns = document.querySelectorAll('.cart')
+class Cart {
+  constructor(productIndex,userIndex,userId,productId,quantity){
+    this.userIndex = userIndex;
+    this.productIndex = productIndex;
+    this.userId = userId;
+    this.productId = productId;
+    this.quantity = quantity;
+  }
+}
+let myCart;
+const cartId = cart.map(el=> el.productId)
+cartBtns.forEach((el,i)=> el.addEventListener('click',()=>{
+  const cartProduct = allProducts[i];
+  const productAdmin = {...users[cartProduct.userIndex]};
+  if(!cartProduct.userIndex || cartProduct.userIndex === `-1`){
+    cartProduct.userIndex = `-1`;
+    productAdmin.id = `ADMIN`;
+  }
+  if(userIndex){
+    if(cartId.includes(cartProduct.id)){
+      cart[cartId.indexOf(cartProduct.id)].quantity++;
+    }else{
+      myCart = new Cart(cartProduct.index,cartProduct.userIndex,productAdmin.id,cartProduct.id,1)
+      cart.push(myCart)
+      cartId.push(myCart.productId)
+    }
+  }else{
+    if(cartId.includes(cartProduct.id)){
+      cart[cartId.indexOf(cartProduct.id)].quantity++;
+    }else{
+      myCart = new Cart(cartProduct.index,cartProduct.userIndex,productAdmin.id,cartProduct.id,1)
+      cart.push(myCart)
+      cartId.push(myCart.productId)
+    }
+  }
+  localStorage.setItem('cart',JSON.stringify(cart))
+}))
