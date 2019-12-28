@@ -1,8 +1,9 @@
 M.AutoInit();
 const userIndex = localStorage.getItem("userIndex");
+const products = JSON.parse(localStorage.getItem('productIntro')) || []; 
 let imageSrc, htmlMarkup;
 if (userIndex !== null) {
-  let markups = JSON.parse(localStorage.getItem("productCard")) || [];
+  let markups = JSON.parse(localStorage.getItem("userProducts")) || [];
   const uploadProductElements = {
     title: document.querySelector("#title"),
     features: document.querySelector("#features"),
@@ -15,16 +16,22 @@ if (userIndex !== null) {
   class Product {
     constructor(title, price, catagory, description, feature,src) {
       this.title = title;
-      this.price = price;
+      this.price = `$${price}`;
       this.description = description;
       this.feature = feature;
       this.image = src;
       this.catagory = catagory;
       this.userIndex = userIndex;
       this.date = new Date()
+      this.id = Math.random().toString(36).substr(2,9)
     }
   }
-  uploadProductElements.form.addEventListener("submit", e => {
+  uploadProductElements.form.addEventListener("submit", (e) => {
+    e.preventDefault()
+    products.forEach(el=>{
+      el.index = +el.index+1;
+      console.log(el.index)
+    })
     const values = {
       title: uploadProductElements.title.value,
       features: uploadProductElements.features.value,
@@ -40,8 +47,10 @@ if (userIndex !== null) {
       values.features,
       imageSrc.result
     );
-    markups.push(element);
-    localStorage.setItem("productCard", JSON.stringify(markups));
+    markups.unshift(element);
+    markups.forEach((el,i)=> el.index = i)
+    localStorage.setItem("userProducts", JSON.stringify(markups));
+    localStorage.setItem("productIntro", JSON.stringify(products));
   });
   const displayCard = () => {
     htmlMarkup = `

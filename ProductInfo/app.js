@@ -1,7 +1,12 @@
 //! 
 const users = JSON.parse(localStorage.getItem('users')) || [];
 const productIndex = location.href.split('=')[1]
-const product = JSON.parse(localStorage.getItem('productIntro'))[productIndex];
+let product;
+if(JSON.parse(localStorage.getItem('userProducts'))){
+  product = [...JSON.parse(localStorage.getItem('userProducts')),... JSON.parse(localStorage.getItem('productIntro'))][productIndex];
+}else{
+  product = JSON.parse(localStorage.getItem('productIntro'))[productIndex]
+}
 const elements = {
   name: document.querySelector('.name'),
   catagory: document.querySelector('.catagory'),

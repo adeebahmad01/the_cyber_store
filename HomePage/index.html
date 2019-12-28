@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>The Cyber Store</title>
+    <link rel="stylesheet" href="../materialize.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="../materialize.js"></script>
+  </head>
+  <body>
+    <div class="header black white-text">
+      <div class="row">
+        <div class="col s4"><h4>Cyber Store</h4></div>
+        <div class="col s5">
+          <div class="col s3"><a href="../UserInfo/index.html">Profile</a></div>
+          <div class="col s3">
+            <a href="../AllProducts/index.html">All Products</a>
+          </div>
+          <div class="col s3">
+            <a href="../UploadProducts/index.html">Add Products</a>
+          </div>
+          <div class="col s3">
+            <a href="../UserProducts/index.html">Your Products</a>
+          </div>
+        </div>
+        <div class="col s3 input-field">
+          <div class="col s3"><h6>Search</h6></div>
+          <div class="col s9">
+            <input
+              type="search"
+              class="black white-text input"
+              id="search"
+              placeholder="Search"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s10" style="position: relative;">
+        <div class="carousel carousel-slider">
+          <div
+            class="carousel-item"
+            style="background-image: url(../images/slide0.jpg);background-size: cover;"
+          ></div>
+          <div
+            class="carousel-item"
+            style="background-image: url(../images/slide1.jpg);background-size: cover;"
+          ></div>
+          <div
+            class="carousel-item"
+            style="background-image: url(../images/slide2.jpg);background-size: cover;"
+          ></div>
+          <div
+            class="carousel-item"
+            style="background-image: url(../images/slide3.jpg);background-size: cover;"
+          ></div>
+          <div
+            class="carousel-item"
+            style="background-image: url(../images/slide4.jpg);background-size: cover;"
+          ></div>
+          <div
+            class="carousel-item"
+            style="background-image: url(../images/slide5.jpg);background-size: cover;"
+          ></div>
+          <div
+            class="carousel-item"
+            style="background-image: url(../images/slide6.jpg);background-size: cover;"
+          ></div>
+          <div
+            class="carousel-item"
+            style="background-image: url(../images/slide7.jpg);background-size: cover;"
+          ></div>
+          <div
+            class="carousel-item"
+            style="background-image: url(../images/slide8.jpg);background-size: cover;"
+          ></div>
+        </div>
+        <button class="btn-large prev black-text "
+          style="font-size: 2rem;position: absolute; top: 50%;left: 1%; transform: translateY(-50%); background-color: rgba(255, 255, 255, 0.335);"
+        >&Leftarrow;</button>
+        <button class="btn-large next black-text "
+          style="font-size: 2rem;position: absolute; top: 50%;right: 1%; transform: translateY(-50%); background-color: rgba(255, 255, 255, 0.335);"
+        >&Rightarrow;</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s10">
+        <h3 class="catgoryName">Name</h3>
+        <div class="row catagory"></div>
+      </div>
+      <div class="col s3"></div>
+    </div>
+    <div class="nagivation">
+      <input
+        type="checkbox"
+        id="nav-toggle"
+        class="nav-checkbox navigation-checkbox"
+      />
+      <label for="nav-toggle" class="nav-btn cyan"><span class="nav-icon">&nbsp;</span></label>
+      <div class="nav-bg navigation-background cyan">&nbsp;</div>
+      <nav class="nav-nav">
+        <h2>Account Info</h2>
+        <div>
+          <h5>Name: <span class="name"></span></h5>
+        </div>
+        <div>
+          <h5>Email: <span class="email"></span></h5>
+        </div>
+        <div>
+          <h5>User Name: <span class="user"></span></h5>
+        </div>
+        <div>
+          <h5>User ID: <span class="userId"></span></h5>
+        </div>
+      </nav>
+    </div>
+    <h1>Recent Products</h1>
+  </body>
+  <script type="module" src="app.js"></script>
+  <script>
+    const el = document.querySelector(".carousel");
+    M.Carousel.init(el, {
+      dist: -250,
+      duration: 100,
+      indicators: true
+    });
+    const instance = M.Carousel.getInstance(el);
+    setInterval(() => instance.next(), 3000);
+    document
+      .querySelector(".prev")
+      .addEventListener("click", () => instance.prev());
+    document
+      .querySelector(".next")
+      .addEventListener("click", () => instance.next());
+  </script>
+</html>

@@ -1,35 +1,39 @@
+//? Making html Markup
+const html = `<div class="col l3 m4 s6 %catagory%"><div style="overflow:hidden" class="card"><div style="position:relative;overflow:visible" class="card-image waves-effect waves-block waves-light"><button class="btn-floating halfway-fab cart waves-effect waves-light red"><i class="material-icons">add</i></button><img draggable="false" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)" src="%image%" alt="%title%"/></div><div class="card-content"><span class="card-title activator grey-text text-darken-4">%title%<i class="material-icons right">more_vert</i></span><p><a class="link" href="../ProductInfo/index.html?id=%index%">View More</a></p></div><div class="card-reveal"><span class="card-title grey-text text-darken-4">%title%<i class="material-icons right">close</i></span><ul>%description%</ul></div></div></div>`;
+const products = JSON.parse(localStorage.getItem('productIntro')) || [];
+const cart = JSON.parse(localStorage.getItem('cart')) || [];
 //! The newly added products by user
-let productsArray = JSON.parse(localStorage.getItem('productCard')) || [];
+const users = JSON.parse(localStorage.getItem('users')) || []
+const userIndex = JSON.parse(localStorage.getItem('userIndex'));
+let userProducts = JSON.parse(localStorage.getItem('userProducts')) || [];
 let rowId = 0;
 let rowIdHtml = 0;
-//? All elements of the page
-const elements = {
-  productName: document.querySelector(".prod"),
-  parentEl:document.querySelector('.row'),
-  list: document.querySelector('#slide-out')
-}
 
+if(products.length === 0){
 //* Creating an array with All Available Products
-const products = [{title: `Neon Light Mouse`, catagory: `mouse` , price:`12.80$`},
-  {title: `Neon Mouses`, catagory: `mouse` , price:`9.99$`},
-  {title: `Super Gaming Mouse`, catagory: `mouse` , price:`19.99$`},
-  {title: `Wireless Mouse`, catagory: `mouse` , price:`5.00$`},
-  {title: `Wireless keyboard`, catagory: `keyboard` , price:`17.50$`},
-  {title: `Video Keyboard`, catagory: `keyboard` , price:`24.99$`},
-  {title: `iOS Keyboard`, catagory: `keyboard` , price:`29.99$`},
-  {title: `Neon Keyboard`, catagory: `keyboard` , price:`39.99$`},
-  {title: `Dell AZ081S` , catagory:`laptop` , price:`190.00$`},
-  {title: `ASUS A9000` , catagory:`laptop` , price:`210.00$`},
-  {title: `HP C9900K` , catagory:`laptop` , price:`279.99$`},
-  {title: `HP Folio 9470m` , catagory:`laptop` , price:`999.99$`},
-  {title: `Wireless Headphone`, catagory: `headphone` , price:`20.00$`},
-  {title: `Headphone`, catagory: `headphone` , price:`14.99$`},
-  {title: `Airpods`, catagory: `headphone` , price:`29.99$`},
-  {title: `Airdots`, catagory: `headphone` , price:`40.00$`},
-  {title: `HP CTX_19JA0`, catagory: `cpu` , price:`80.98$`},
-  {title: `CORE 2 DO`, catagory: `cpu` , price:`98.99$`},
-  {title: `Gaming pc`, catagory: `cpu` , price:`299.99$`},
-  {title: `CORE i9 9900K`, catagory: `cpu` , price:`1000.99$`}];
+const pdcts = [{title: `Neon Light Mouse`, catagory: `mouse` , price:`$12.80`},
+  {title: `Neon Mouses`, catagory: `mouse` , price:`$9.99`},
+  {title: `Super Gaming Mouse`, catagory: `mouse` , price:`$19.99`},
+  {title: `Wireless Mouse`, catagory: `mouse` , price:`$5.00`},
+  {title: `Wireless keyboard`, catagory: `keyboard` , price:`$17.50`},
+  {title: `Video Keyboard`, catagory: `keyboard` , price:`$24.99`},
+  {title: `iOS Keyboard`, catagory: `keyboard` , price:`$29.99`},
+  {title: `Neon Keyboard`, catagory: `keyboard` , price:`$39.99`},
+  {title: `Dell AZ081S` , catagory:`laptop` , price:`$190.00`},
+  {title: `ASUS A9000` , catagory:`laptop` , price:`$210.00`},
+  {title: `HP C9900K` , catagory:`laptop` , price:`$279.99`},
+  {title: `HP Folio 9470m` , catagory:`laptop` , price:`$999.99`},
+  {title: `Wireless Headphone`, catagory: `headphone` , price:`$20.00`},
+  {title: `Headphone`, catagory: `headphone` , price:`$14.99`},
+  {title: `Airpods`, catagory: `headphone` , price:`$29.99`},
+  {title: `Airdots`, catagory: `headphone` , price:`$40.00`},
+  {title: `HP CTX_19JA0`, catagory: `cpu` , price:`$80.98`},
+  {title: `CORE 2 DO`, catagory: `cpu` , price:`$98.99`},
+  {title: `Gaming pc`, catagory: `cpu` , price:`$299.99`},
+  {title: `CORE i9 9900K`, catagory: `cpu` , price:`$1000.99`}];
+pdcts.forEach(el=>{
+  products.push(el)
+})
 
 //? Descriptions of all products
 const description = [`<li>The wireless mode: Battery updates to 30-day play time in a single charge, no batteries are required</li>
@@ -73,15 +77,6 @@ const description = [`<li>The wireless mode: Battery updates to 30-day play time
   `<li>At the heart of this machine is an Intel Corei7-8700K six-core processor offering a clocking speed of 3.7 GHz. With a Turbo boost, this can go up to 4.7 GHz.</li>
   <li>The RAM is 16 GB DDR4 and memory is 1 TB HDD. There is an additional 240 GB SSD.</li>`];
 
-//! Setting the description Image source feature and date of the product
-products.forEach((el, i) => {
-  el.description = description[i];
-  el.image = `../images/electronics${i + 1}.jpg`;
-  el.feature = `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente ab rerum, illum delectus consectetur libero error. Laudantium aperiam voluptate ipsa provident, deleniti porro minima, quod fugiat odit cupiditate libero odio?`;
-  el.date = new Date(`july 7 2001`)
-});
-//* Adding The newly created product in the begginning of the array
-productsArray.forEach(el=> products.unshift(el))
 //? Creating an array of ids
 const ids = JSON.parse(localStorage.getItem('productID')) || [];
 for (let i = 0; i <= (products.length); i++) {
@@ -91,55 +86,106 @@ for (let i = 0; i <= (products.length); i++) {
     ids.unshift(Math.random().toString(36).substr(2, 9))
   }
 }
+//! Setting the description Image source feature and date of the product
+products.forEach((el, i) => {
+  el.description = description[i];
+  el.image = `../images/electronics${i + 1}.jpg`;
+  el.feature = `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente ab rerum, illum delectus consectetur libero error. Laudantium aperiam voluptate ipsa provident, deleniti porro minima, quod fugiat odit cupiditate libero odio?`;
+  el.date = new Date(`july 7 2001`)
+  el.id = ids[i];
+});
+//* Save the products into local storage
+localStorage.setItem('productIntro', JSON.stringify(products))
+}
+//* Adding The newly created product in the begginning of the array
+const allProducts = [...userProducts,...products]
+
 const createHtml = ()=>{
   const abc = document.createElement('div')
   abc.className = `row`
   abc.id = `row-${rowId}`;
-  rowId++
-  document.body.insertBefore( abc , document.body.lastElementChild)
+  rowId++;
+  document.body.insertBefore( abc , document.body.lastElementChild);
 }
-createHtml()
-for (let i = 0; i < products.length; i++) {
-  if(i%4 === 3) createHtml()
+createHtml();
+for (let i = 0; i < allProducts.length; i++) {
+  if(i%4 === 3) createHtml();
 }
-//? Saving the id in localstorage
-localStorage.setItem('productID', JSON.stringify(ids))
-products.forEach((el,i) => {
+allProducts.forEach((el,i) => {
   //! Setting index of the element
-  el.index = i;
-  //* Setting id of the element
-  el.id = ids[i]
-  //? Making html Markup
-  const html = `
-  <div class="col l3 m4 s6 ${el.catagory}">
-    <div class="card">
-      <div class="card-image waves-effect waves-block waves-light">
-        <img
-          src="${el.image}"
-          alt="${el.title}"
-        />
-      </div>
-      <div class="card-content">
-        <span class="card-title activator grey-text text-darken-4">${el.title}<i class="material-icons right">more_vert</i></span>
-        <p><a class="link" href="../ProductInfo/index.html?id=${el.index}">View More</a></p>
-      </div>
-      <div class="card-reveal">
-        <span class="card-title grey-text text-darken-4">${el.title}<i class="material-icons right">close</i></span>
-        <ul>${el.description}</ul>
-      </div>
-    </div>
-  </div>`;
+  // el.index = i;
   //! Adding html markup to UI !\\
-  const a = el.index % 4
-  console.log(a);
-  
+  const a = el.index % 4;
+  let newHtml = html.replace(/%catagory%/g, el.catagory)
+  newHtml = newHtml.replace(/%title%/g, el.title)
+  newHtml = newHtml.replace(/%image%/g, el.image)
+  newHtml = newHtml.replace(/%description%/g, el.description)
+  newHtml = newHtml.replace(/%index%/g, el.index)
   let htmlElement =  document.getElementById(`row-${rowIdHtml}`);
-  if(a === 3){
-    rowIdHtml++
-  }
-  htmlElement.insertAdjacentHTML("beforeend", html);
- });
-//* Save the products into local storage
-localStorage.setItem('productIntro', JSON.stringify(products))
+  a===3? rowIdHtml++: ``
+  htmlElement.insertAdjacentHTML("beforeend", newHtml);
+});
+setTimeout(()=>{
+  const heights = Array.from(document.querySelectorAll('img')).map(el=> el.offsetHeight)
+  let maxHeight
+  setTimeout(() => {
+    maxHeight = Math.max(...heights)
+    document.querySelectorAll(`.card-image`).forEach(el=> el.style.height = `${maxHeight+20}px`)
+  }, 50);
+},200)
+setTimeout(()=>{
+  const heights = Array.from(document.querySelectorAll('.card-content')).map(el=> el.offsetHeight)
+  let maxHeight
+  setTimeout(() => {
+    maxHeight = Math.max(...heights)
+    document.querySelectorAll(`.card-content`).forEach(el=> el.style.height = `${maxHeight+20}px`)
+  }, 50);
+},200);
+
 //* Initializing Materialize
 M.AutoInit();
+
+setInterval(()=>{
+  if(localStorage.getItem('productIntro') === null){
+    location.reload()
+  }
+},100)
+
+const cartBtns = document.querySelectorAll('.cart')
+class Cart {
+  constructor(productIndex,userIndex,userId,productId,quantity){
+    this.userIndex = userIndex;
+    this.productIndex = productIndex;
+    this.userId = userId;
+    this.productId = productId;
+    this.quantity = quantity;
+  }
+}
+let myCart;
+const cartId = cart.map(el=> el.productId)
+cartBtns.forEach((el,i)=> el.addEventListener('click',()=>{
+  const cartProduct = allProducts[i];
+  const productAdmin = {...users[cartProduct.userIndex]};
+  if(!cartProduct.userIndex || cartProduct.userIndex === `-1`){
+    cartProduct.userIndex = `-1`;
+    productAdmin.id = `ADMIN`;
+  }
+  if(userIndex){
+    if(cartId.includes(cartProduct.id)){
+      cart[cartId.indexOf(cartProduct.id)].quantity++;
+    }else{
+      myCart = new Cart(cartProduct.index,cartProduct.userIndex,productAdmin.id,cartProduct.id,1)
+      cart.push(myCart)
+      cartId.push(myCart.productId)
+    }
+  }else{
+    if(cartId.includes(cartProduct.id)){
+      cart[cartId.indexOf(cartProduct.id)].quantity++;
+    }else{
+      myCart = new Cart(cartProduct.index,cartProduct.userIndex,productAdmin.id,cartProduct.id,1)
+      cart.push(myCart)
+      cartId.push(myCart.productId)
+    }
+  }
+  localStorage.setItem('cart',JSON.stringify(cart))
+}))

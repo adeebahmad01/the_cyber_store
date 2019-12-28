@@ -1,0 +1,103 @@
+.nav-checkbox{
+  display: none
+}
+.nav-btn{
+  height: 3.5rem;
+  width: 3.5rem;
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+  z-index: 100;
+  border-radius: 50%;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0 , 0.3);
+  text-align: center;
+  cursor: pointer;
+}
+.nav-checkbox:checked + .nav-btn{
+  background-color: #fff !important;
+}
+.nav-bg{
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  position: fixed;
+  bottom: 5.5%;
+  right: 5.5%;
+  z-index: 20;
+  transition: all 0.8s;
+}
+.nav-nav{
+  height: 27rem !important;
+  width:  27rem !important;
+  position: fixed;
+  bottom: 0%;
+  right: 0%;
+  z-index: 21;
+  transform: translateX(500px);
+  opacity: 0;
+  width: 0;
+  transition: all .4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  visibility: hidden;
+  background-color: transparent;
+  overflow: scroll;
+}
+.nav-nav::-webkit-scrollbar{
+  display: none;
+}
+
+.navigation-checkbox:checked ~ .navigation-background{
+  -webkit-transform:scale(20);
+  transform:scale(20)
+}
+.navigation-checkbox:checked ~ .nav-nav{
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0px);
+  box-shadow: none;
+}
+.nav-icon{
+  position: relative;
+  margin-top: 1.75rem;
+  border-radius: 1rem;
+  transition: all 0.2s ease-out;
+}
+.nav-icon , .nav-icon::before, .nav-icon::after{
+  width: 1.7rem;
+  height: 1.5px;
+  background-color: #fff;
+  display: inline-block;
+  border-radius: 10rem;
+}
+.nav-icon::before, .nav-icon::after{
+   content: ""; 
+   position: absolute;
+   left: 0;
+   transition:  all .8s cubic-bezier(0.68, -0.55, 0.265, 1.55), background-color 0.1s ease-in-out;
+}
+.nav-icon::before{
+  top: -.4rem;
+  
+}
+.nav-icon::after{
+  top: .4rem;
+  
+}
+.nav-btn:hover  .nav-icon::before{
+  top: -0.5rem;
+}
+.nav-btn:hover  .nav-icon::after{
+  top: 0.5rem;
+}
+.nav-checkbox:checked + .nav-btn .nav-icon{
+  background-color: transparent;
+}
+.nav-checkbox:checked + .nav-btn .nav-icon::before{
+  background-color: #000;
+  top: 0;
+  transform: rotate(495deg)
+}
+.nav-checkbox:checked + .nav-btn .nav-icon::after{
+  background-color: #000;
+  top: 0;
+  transform: rotate(-495deg);
+}

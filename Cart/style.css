@@ -1,0 +1,21 @@
+.div{
+  position: absolute;
+
+}
+.div button{
+  box-shadow: none !important;
+}
+.q{
+  padding-top: 1.5rem;
+}
+.up{
+  top: -10px;
+  right: -17.5px;
+}
+.down{
+  right: -18.5px;
+  bottom: -30px;
+}
+.circle{
+  transform: scale(1.5) translateY(25%);
+}

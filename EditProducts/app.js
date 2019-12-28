@@ -1,9 +1,24 @@
-
 const productIndex = location.href.split("=")[1];
 const products = JSON.parse(localStorage.getItem("productIntro"));
-const productsArray = JSON.parse(localStorage.getItem("productCard"));
-const product = products?products[productIndex]: ``;
-const productArray =  productsArray?productsArray[productIndex]:``;
+const userProducts = JSON.parse(localStorage.getItem("userProducts"));
+let allProducts, pIndex,image;
+
+if (userProducts) {
+  allProducts = [...userProducts, ...products];
+} else {
+  allProducts = products;
+}
+const product = allProducts ? allProducts[productIndex] : ``;
+if (userProducts) {
+  userProducts.find((el, i) => {
+    if (el.id === product.id) {
+      pIndex = i;
+      return true;
+    }
+  });
+} else {
+  pIndex = -1;
+}
 const userIndex = localStorage.getItem("userIndex");
 let values, imageSrc;
 
@@ -15,18 +30,18 @@ const elements = {
   catagory: document.querySelector("#catagory"),
   uploadFile: document.querySelector(".uploadFile"),
   form: document.querySelector("form"),
-  id: document.querySelector('.id')
+  id: document.querySelector(".id")
 };
 if (productIndex) {
   if (product.userIndex === userIndex) {
-    elements.id.value = productIndex
+    elements.id.value = productIndex;
     elements.title.value = product.title;
     elements.features.value = product.feature;
     elements.price.value = product.price;
     elements.catagory.value = product.catagory;
     elements.description.value = product.description;
     const displayCard = () => {
-      imageSrc = imageSrc ? imageSrc.result : product.image;
+      image = imageSrc ? imageSrc.result : product.image;
       values = {
         title: elements.title.value,
         features: elements.features.value,
@@ -38,7 +53,7 @@ if (productIndex) {
         <div class="col l3 m4 s6 ${values.catagory}">
           <div class="card">
             <div class="card-image waves-effect waves-block waves-light">
-              <img style="width: 100%;" src="${imageSrc}" alt="${values.title}" id="img1"/>
+              <img style="width: 100%;" src="${image}" alt="${values.title}" id="img1"/>
             </div>
             <div class="card-content">
               <span class="card-title activator grey-text text-darken-4">${values.title}<i class="material-icons right">more_vert</i></span>
@@ -75,29 +90,29 @@ if (productIndex) {
     elements.uploadFile.addEventListener("change", displayCard);
     elements.uploadFile.addEventListener("change", () => {
       const imageData = elements.uploadFile.files[0];
-      imageSrc = new FileReader();
-      imageSrc.readAsDataURL(imageData);
-      setTimeout(
-        () => (document.getElementById("img1").src = imageSrc.result),
-        100
-      );
+      if(imageData){
+        imageSrc = new FileReader();
+        imageSrc.readAsDataURL(imageData);
+        setTimeout(
+          () => (document.getElementById("img1").src = imageSrc.result),
+          100
+        );
+      }
     });
     elements.form.addEventListener("submit", () => {
+      event.preventDefault()
       product.title = values.title;
       product.feature = values.features;
       product.catagory = values.catagory;
-      product.price = values.price;
+      product.price = `$${values.price}`;
       product.description = values.description;
-      imageSrc ? (product.image = imageSrc.result) : ``;
-      console.log(product)
-      localStorage.setItem(`productIntro`, JSON.stringify(products));
-      delete product.index;
-      productsArray[productIndex] = product
-      localStorage.setItem('productCard',JSON.stringify(productsArray))
+      imageSrc.readyState > 0 ? product.image = imageSrc.result :``;
+      userProducts[pIndex] = product;
+      localStorage.setItem("userProducts", JSON.stringify(userProducts));
     });
   } else {
     document.body.innerHTML = `<h1>You Can only edit products that you created</h1>`;
   }
-}else{
-  document.body.innerHTML = `<h1>No Product Selected</h1>`
+} else {
+  document.body.innerHTML = `<h1>No Product Selected</h1>`;
 }

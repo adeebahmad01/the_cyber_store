@@ -30,10 +30,8 @@ const Edit = () => {
   emails.splice(userIndex, 1);
   const userNames = users.map(el => el.userName);
   userNames.splice(userIndex, 1);
-  console.log(emails, userNames);
   const userValid = checkValid(values.username.value,userNames,`User Name`,values.username);
   const emailValid = checkValid(values.email.value,emails,`Email`,values.email);
-  console.log(userValid, emailValid);
   if(!userValid && !emailValid){
     users[userIndex].email = values.email.value;
     users[userIndex].userName = values.username.value;
@@ -52,7 +50,6 @@ const checkValid = (input, arr, name, el) => {
   if (arr.includes(input)) {
     values.resPg.innerHTML = `${name} has already Taken`;
     let abc = el.getBoundingClientRect();
-    console.log(abc,el);
     values.resPg.style.transform = `translate(${abc.left}px, ${abc.top+window.scrollY}px)`;
     el.focus();
     return arr.includes(input);

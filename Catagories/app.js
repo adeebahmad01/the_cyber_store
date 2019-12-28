@@ -4,7 +4,7 @@
 
 const catagories = [`mouse`, `keyboard`, `laptop`,`cpu`, `headphone`];
 
-productsArray.forEach(el=>{
+userProducts.forEach(el=>{
   if(!catagories.includes(el.catagory)) catagories.push(el.catagory)
 })
 

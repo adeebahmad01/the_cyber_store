@@ -1,3 +1,4 @@
+M.AutoInit()
 //! Getting Array From
 localStorage.removeItem('userIndex')
 const loginUsers =
