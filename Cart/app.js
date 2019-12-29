@@ -1,4 +1,4 @@
-const html = `<li class="collection-item avatar"><img src="%IMAGE%" alt="" class="circle" /><span style="font-size: 1.8rem;" class="title">%TITLE%</span><p><span>%PRICE%</span><br><span>%CATAGORY%</span></p><div class="secondary-content"><div class="div up"><button class="btn-small increase transparent grey-text">&bigtriangleup;</button></div><div class="q" id="%I%">%QUANTITY%</div><div class="div down"><button class="btn-small decrease transparent grey-text">&bigtriangledown;</button></div></div></li>`;
+const html = `<li class="collection-item avatar" id="%I%"><div class="div cancel"><button class="transparent delete btn grey-text">&rotimes;</button></div><img src="%IMAGE%" alt="" class="circle" /><span style="font-size: 1.8rem;" class="title">%TITLE%</span><p><span>%PRICE%</span><br /><span>%CATAGORY%</span></p><a href="../OrderInfo/index.html?id=%I%" class="orderBtn btn grey white-text waves-effect waves-block">Order</a><div class="secondary-content"><div class="div up"><button class="btn-small increase transparent grey-text">&bigtriangleup;</button></div><div class="q" contenteditable="true" id="%I%">%QUANTITY%</div><div class="div down"><button class="btn-small decrease transparent grey-text">&bigtriangledown;</button></div></div></li>`;
 const products = JSON.parse(localStorage.getItem('productIntro')) || [];
 const cart = JSON.parse(localStorage.getItem('cart')) || [];
 //! The newly added products by user
@@ -46,21 +46,32 @@ jsRenderElements.btnInc.forEach((el)=>{
   el.addEventListener('click',(e)=>{
     //! UI
     let q = e.target.parentNode.nextElementSibling;
-    const price = e.target.parentNode.parentNode.previousElementSibling.firstElementChild.innerHTML
-    let innerhtml = +q.innerHTML;
+    const price = e.target.parentNode.parentNode.previousElementSibling.previousElementSibling.firstElementChild.innerHTML
+    let innerhtml;
+    if(q.innerHTML === `0`){
+      innerhtml = `1`
+    }else{
+      innerhtml = Math.ceil(+q.innerHTML);
+    }
     innerhtml++
     q.innerHTML = `${innerhtml}`
     cartProducts[q.id].quantity = innerhtml;
     cart[q.id].quantity = innerhtml;
-    document.querySelector(`.price${q.id}`).innerHTML = `$`+ calculateTotal(innerhtml,price).toFixed(2)
+    document.querySelector(`.price${q.id}`).innerHTML = `$`+ calculateTotal(innerhtml,price).toFixed(2);
+    localStorage.setItem('cart',JSON.stringify(cart))
   })
 })
 jsRenderElements.btnDec.forEach(el=>{
   el.addEventListener('click',(e)=>{
     //! UI
     const q = e.target.parentNode.previousElementSibling;
-    const price = e.target.parentNode.parentNode.previousElementSibling.firstElementChild.innerHTML
-    let innerhtml = +q.innerHTML;
+    const price = e.target.parentNode.parentNode.previousElementSibling.previousElementSibling.firstElementChild.innerHTML
+    let innerhtml;
+    if(q.innerHTML === `0`){
+      innerhtml = `1`
+    }else{
+      innerhtml = Math.ceil(+q.innerHTML);
+    }
     innerhtml--;
     if(innerhtml === 0){
       return;
@@ -68,7 +79,8 @@ jsRenderElements.btnDec.forEach(el=>{
     q.innerHTML = `${innerhtml}`
     cartProducts[q.id].quantity = innerhtml;
     cart[q.id].quantity = innerhtml;
-    document.querySelector(`.price${q.id}`).innerHTML = `$`+ calculateTotal(innerhtml,price).toFixed(2)
+    document.querySelector(`.price${q.id}`).innerHTML = `$`+ calculateTotal(innerhtml,price).toFixed(2);
+    localStorage.setItem('cart',JSON.stringify(cart))
   })
 })
 const createListItems = (i)=>{
@@ -85,4 +97,15 @@ for (let i = 0; i < cart.length; i++) {
 
 cartProducts.forEach((el,i)=>{
   document.querySelector(`.price${i}`).innerHTML = `$${calculateTotal(el.quantity,el.price).toFixed(2)}`
+})
+document.querySelectorAll('.delete').forEach((el,i)=>{
+  el.addEventListener('click', e=>{
+    const item = e.target.parentNode.parentNode;
+    cart.splice(+item.id,1)
+    item.remove();
+    localStorage.setItem('cart',JSON.stringify(cart));
+    const priceArray = Array.from(document.getElementById('one').children);
+    const itemPrice = priceArray.find(el=>el.id === `item${item.id}`);
+    itemPrice.remove()
+  })
 })

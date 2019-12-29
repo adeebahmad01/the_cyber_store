@@ -1,4 +1,5 @@
 M.AutoInit();
+
 const userIndex = localStorage.getItem("userIndex");
 const products = JSON.parse(localStorage.getItem('productIntro')) || []; 
 let imageSrc, htmlMarkup;

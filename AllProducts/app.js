@@ -8,7 +8,10 @@ const userIndex = JSON.parse(localStorage.getItem('userIndex'));
 let userProducts = JSON.parse(localStorage.getItem('userProducts')) || [];
 let rowId = 0;
 let rowIdHtml = 0;
-
+const elements = {
+  list: document.querySelector('.sidenav'),
+  productName: document.querySelector('.prod')
+}
 if(products.length === 0){
 //* Creating an array with All Available Products
 const pdcts = [{title: `Neon Light Mouse`, catagory: `mouse` , price:`$12.80`},
@@ -93,6 +96,7 @@ products.forEach((el, i) => {
   el.feature = `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente ab rerum, illum delectus consectetur libero error. Laudantium aperiam voluptate ipsa provident, deleniti porro minima, quod fugiat odit cupiditate libero odio?`;
   el.date = new Date(`july 7 2001`)
   el.id = ids[i];
+  el.index = i + userProducts.length
 });
 //* Save the products into local storage
 localStorage.setItem('productIntro', JSON.stringify(products))
@@ -113,7 +117,7 @@ for (let i = 0; i < allProducts.length; i++) {
 }
 allProducts.forEach((el,i) => {
   //! Setting index of the element
-  // el.index = i;
+  el.index = i;
   //! Adding html markup to UI !\\
   const a = el.index % 4;
   let newHtml = html.replace(/%catagory%/g, el.catagory)
@@ -149,16 +153,73 @@ setInterval(()=>{
   if(localStorage.getItem('productIntro') === null){
     location.reload()
   }
-},100)
+},100);
+
+
+//!*********************************!\\
+//*Rendering the Side Catagories bar*\\
+//?*********************************?\\
+
+const catagories = [`mouse`, `keyboard`, `laptop`,`cpu`, `headphone`];
+
+userProducts.forEach(el=>{
+  if(!catagories.includes(el.catagory)) catagories.push(el.catagory)
+})
+
+catagories.forEach(el=>{
+  let capital = el.split(``);
+  capital[0] = capital[0].toUpperCase()
+  capital = capital.join(``)
+  const markup = `
+  <li><button class="waves-effect ${el}-btn">${capital}</button></li>
+  <li>
+    <div class="divider"></div>
+  </li>`
+  elements.list.insertAdjacentHTML('beforeend',markup)
+})
+//* Catagory selecting Variable
+let array;
+
+//? To show all products
+const showAll = ()=> document.querySelectorAll(".col").forEach(el=>{
+  elements.productName.innerHTML = ``;
+  el.classList.remove(`hidden`);
+  el.classList.remove(`fade`);
+})
+
+//! TO show selected products
+const showProducts = (nameProduct)=>{
+  let rowCata = 0;
+  let rowCataHtml = 0;
+  //* Selecting all elements with class of catagory
+  array = document.querySelectorAll(`.${nameProduct}`)
+  //? Selecting all cards
+  const allProducts = document.querySelectorAll(".col");
+  
+  //! Adding Class of Hidden
+  allProducts.forEach(el => el.classList.add("hidden"));
+
+  //* Changing HTML of Heading
+  elements.productName.innerHTML = nameProduct;
+
+  //? Removing class of hidden from specific elements
+  array.forEach(el => el.classList.remove("hidden"));
+}
+
+//! Adding Listener to all Buttons
+catagories.forEach(el=>{
+  document.querySelector(`.${el}-btn`).addEventListener('click', ()=> showProducts(el))
+})
 
 const cartBtns = document.querySelectorAll('.cart')
 class Cart {
-  constructor(productIndex,userIndex,userId,productId,quantity){
+  constructor(productIndex,userIndex,userId,productId,quantity,buyerIndex){
     this.userIndex = userIndex;
     this.productIndex = productIndex;
     this.userId = userId;
     this.productId = productId;
     this.quantity = quantity;
+    this.buyerIndex = buyerIndex
   }
 }
 let myCart;
@@ -170,22 +231,12 @@ cartBtns.forEach((el,i)=> el.addEventListener('click',()=>{
     cartProduct.userIndex = `-1`;
     productAdmin.id = `ADMIN`;
   }
-  if(userIndex){
-    if(cartId.includes(cartProduct.id)){
-      cart[cartId.indexOf(cartProduct.id)].quantity++;
-    }else{
-      myCart = new Cart(cartProduct.index,cartProduct.userIndex,productAdmin.id,cartProduct.id,1)
-      cart.push(myCart)
-      cartId.push(myCart.productId)
-    }
+  if(cartId.includes(cartProduct.id)){
+    cart[cartId.indexOf(cartProduct.id)].quantity++;
   }else{
-    if(cartId.includes(cartProduct.id)){
-      cart[cartId.indexOf(cartProduct.id)].quantity++;
-    }else{
-      myCart = new Cart(cartProduct.index,cartProduct.userIndex,productAdmin.id,cartProduct.id,1)
-      cart.push(myCart)
-      cartId.push(myCart.productId)
-    }
+    myCart = new Cart(cartProduct.index,cartProduct.userIndex,productAdmin.id,cartProduct.id,1,userIndex ? userIndex: `-1`)
+    cart.push(myCart)
+    cartId.push(myCart.productId)
   }
   localStorage.setItem('cart',JSON.stringify(cart))
 }))
