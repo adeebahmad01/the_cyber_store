@@ -1,5 +1,7 @@
 import html from '../utils/card.js';
-
+import header from '../utils/Header.js';
+import footer from '../utils/Footer.js';
+let modifiedHeader;
 let rowId = 0;
 let rowIdHtml = 0;
 const products = JSON.parse(localStorage.getItem("productIntro"));
@@ -41,3 +43,17 @@ if (userIndex !== null) {
 } else {
   document.body.innerHTML = `<h1>Please Login in or signup to see your products</h1><a href="../Login/index.html">Login Now</a>`;
 }
+modifiedHeader = header.replace(/%NAME1%/g, `Home`)
+modifiedHeader = modifiedHeader.replace(/%HREF1%/g, `../HomePage/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME2%/g, `My Cart`)
+modifiedHeader = modifiedHeader.replace(/%HREF2%/g, `../Cart/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME3%/g, `Products`)
+modifiedHeader = modifiedHeader.replace(/%HREF3%/g, `../All Products/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME4%/g, `My Details`)
+modifiedHeader = modifiedHeader.replace(/%HREF4%/g, `../UserInfo/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME5%/g, `Login`)
+modifiedHeader = modifiedHeader.replace(/%HREF5%/g, `../Login/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME6%/, `Forgot Password`)
+modifiedHeader = modifiedHeader.replace(/%HREF6%/, `../ForgotPassword/index.html`)
+document.body.insertAdjacentHTML('afterbegin', modifiedHeader)
+document.body.insertAdjacentHTML('beforeend', footer)

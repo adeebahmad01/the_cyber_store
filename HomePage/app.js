@@ -1,5 +1,8 @@
 
 import html from "../utils/card.js";
+import header from '../utils/Header.js';
+import footer from '../utils/Footer.js';
+let modifiedHeader;
 let rowId = 0;
 let rowIdHtml = 0;
 const cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -69,7 +72,7 @@ if (userIndex) {
 } else {
   elements.infoContainer.innerHTML = `
   <div class="row">
-    <div class="s12 center-align"><img src="../images/icons8-name-96.png" alt="Login" class="img" width="150px"></div>
+    <div class="s12 center-align"><img src="../images/gmail.png" alt="Login" class="img" width="150px"></div>
   </div>
   <div class="row">
     <div class="col s6 center-align"><a href="../Login/index.html" class="btn white grey-text center">Login</a></div>
@@ -158,9 +161,26 @@ cartBtns.forEach((el, i) =>
     localStorage.setItem("cart", JSON.stringify(cart));
   })
 );
-setInterval(()=>{
+// setInterval(()=>{
+  
+// },1000)
+window.addEventListener('load', ()=>{
   equalHeight(`.catagory`);
   for (let i = 0; i < rowId; i++) {
     equalHeight(`#row-${i}`)
   }
-},100)
+})
+modifiedHeader = header.replace(/%NAME1%/g, `Products`)
+modifiedHeader = modifiedHeader.replace(/%HREF1%/g, `../AllProducts/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME2%/g, `My Cart`)
+modifiedHeader = modifiedHeader.replace(/%HREF2%/g, `../Cart/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME3%/g, `My Products`)
+modifiedHeader = modifiedHeader.replace(/%HREF3%/g, `../UserProducts/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME4%/g, `My Details`)
+modifiedHeader = modifiedHeader.replace(/%HREF4%/g, `../UserInfo/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME5%/g, `Login`)
+modifiedHeader = modifiedHeader.replace(/%HREF5%/g, `../Login/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME6%/, `Forgot Password`)
+modifiedHeader = modifiedHeader.replace(/%HREF6%/, `../ForgotPassword/index.html`)
+document.body.insertAdjacentHTML('afterbegin', modifiedHeader)
+document.body.insertAdjacentHTML('beforeend', footer)

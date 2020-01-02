@@ -1,6 +1,8 @@
 //! Getting Array From Local Storage
 const forgotPassUsers = JSON.parse(localStorage.getItem("users")) === null ? [] : JSON.parse(localStorage.getItem("users"));
-
+import header from '../utils/Header.js';
+import footer from '../utils/Footer.js';
+let modifiedHeader;
 //? Removing existing resetPassIndex
 localStorage.removeItem('resetPassIndex')
 
@@ -36,7 +38,7 @@ const checkAvailabilty = () =>{
     return false
   }
 }
-
+forgotPassElements.form.onsubmit= ()=>checkAvailabilty()
 const checkUsername = (input, i, array)=>{
   //! if input is not present in array the show error msg
   if(input !== array[i] ){
@@ -45,3 +47,18 @@ const checkUsername = (input, i, array)=>{
   }
   return true
 }
+
+modifiedHeader = header.replace(/%NAME1%/g, `Home`)
+modifiedHeader = modifiedHeader.replace(/%HREF1%/g, `../HomePage/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME2%/g, `my details`)
+modifiedHeader = modifiedHeader.replace(/%HREF2%/g, `../UserInfo/index.html`)
+modifiedHeader = modifiedHeader.replace(/%display3%/g, `none`)
+modifiedHeader = modifiedHeader.replace(/%NAME4%/g, `Login`)
+modifiedHeader = modifiedHeader.replace(/%HREF4%/g, `../Login/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME5%/g, `Sign Up`)
+modifiedHeader = modifiedHeader.replace(/%HREF5%/g, `../SignUp/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME6%/g, `All Products`)
+modifiedHeader = modifiedHeader.replace(/%HREF6%/g, `../AllProducts/index.html`)
+
+document.body.insertAdjacentHTML('afterbegin', modifiedHeader)
+document.body.insertAdjacentHTML('beforeend', footer)

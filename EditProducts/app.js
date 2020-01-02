@@ -2,7 +2,9 @@ const productIndex = location.href.split("=")[1];
 const products = JSON.parse(localStorage.getItem("productIntro"));
 const userProducts = JSON.parse(localStorage.getItem("userProducts"));
 let allProducts, pIndex,image;
-
+import header from '../utils/Header.js';
+import footer from '../utils/Footer.js';
+let modifiedHeader,htmlMarkup;
 if (userProducts) {
   allProducts = [...userProducts, ...products];
 } else {
@@ -37,7 +39,7 @@ if (productIndex) {
     elements.id.value = productIndex;
     elements.title.value = product.title;
     elements.features.value = product.feature;
-    elements.price.value = product.price;
+    elements.price.value = product.price.split(`$`)[1];
     elements.catagory.value = product.catagory;
     elements.description.value = product.description;
     const displayCard = () => {
@@ -112,7 +114,27 @@ if (productIndex) {
     });
   } else {
     document.body.innerHTML = `<h1>You Can only edit products that you created</h1>`;
+    setTimeout(() => {
+      history.back()
+    }, 5000);
   }
 } else {
   document.body.innerHTML = `<h1>No Product Selected</h1>`;
 }
+
+
+modifiedHeader = header.replace(/%NAME1%/g, `Home`)
+modifiedHeader = modifiedHeader.replace(/%HREF1%/g, `../HomePage/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME2%/g, `My Products`)
+modifiedHeader = modifiedHeader.replace(/%HREF2%/g, `../UserProducts/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME3%/g, `Forgot Password`)
+modifiedHeader = modifiedHeader.replace(/%HREF3%/g, `../ForgotPassword/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME4%/g, `My Cart`)
+modifiedHeader = modifiedHeader.replace(/%HREF4%/g, `../Cart/index.html`)
+modifiedHeader = modifiedHeader.replace(/%display5%/g, `none`)
+modifiedHeader = modifiedHeader.replace(/%HREF5%/g, `../SignUp/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME6%/g, `All Products`)
+modifiedHeader = modifiedHeader.replace(/%HREF6%/g, `../AllProducts/index.html`)
+
+document.body.insertAdjacentHTML('afterbegin', modifiedHeader)
+document.body.insertAdjacentHTML('beforeend', footer)

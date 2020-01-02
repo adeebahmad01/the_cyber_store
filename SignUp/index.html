@@ -13,7 +13,7 @@
   </head>
   <body>
     <h1>Sign Up</h1>
-    <form class="form col s8" action="../Login/index.html" onsubmit="return signupFunctions.userAdd()">
+    <form class="form col s8" action="../Login/index.html">
       <div class="row">
         <div class="input-field col s4">
           <input class="validate" required type="text" id="first_name" />
@@ -75,13 +75,15 @@
               <input required type="text" id="city"/>
               <label for="city">City</label>
             </div>
-            <div class="input-field col s4">
-              <input type="text" id="country"/>
-              <label for="country">Country</label>
-            </div>
+      </div>
+      <div class="row">
+          <div class="input-field col s4">
+            <input type="text" id="country"/>
+            <label for="country">Country</label>
+          </div>
       </div>
       <button class="signup btn">Sign Up</button>
     </form>
   </body>
-  <script src="app.js"></script>
+  <script type="module" src="app.js"></script>
 </html>

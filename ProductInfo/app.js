@@ -1,4 +1,7 @@
 //! 
+import header from '../utils/Header.js';
+import footer from '../utils/Footer.js';
+let modifiedHeader;
 const users = JSON.parse(localStorage.getItem('users')) || [];
 const productIndex = location.href.split('=')[1]
 let product;
@@ -33,3 +36,19 @@ else{
   elements.image.alt = product.title;
   elements.btn.href = `${elements.btn.href}?id=${productIndex}`
 }
+
+modifiedHeader = header.replace(/%NAME1%/g, `Home`)
+modifiedHeader = modifiedHeader.replace(/%HREF1%/g, `../HomePage/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME2%/g, `My Products`)
+modifiedHeader = modifiedHeader.replace(/%HREF2%/g, `../UserProducts/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME3%/g, `Forgot Password`)
+modifiedHeader = modifiedHeader.replace(/%HREF3%/g, `../ForgotPassword/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME4%/g, `My Cart`)
+modifiedHeader = modifiedHeader.replace(/%HREF4%/g, `../Cart/index.html`)
+modifiedHeader = modifiedHeader.replace(/%display5%/g, `none`)
+modifiedHeader = modifiedHeader.replace(/%HREF5%/g, `../SignUp/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME6%/g, `All Products`)
+modifiedHeader = modifiedHeader.replace(/%HREF6%/g, `../AllProducts/index.html`)
+
+document.body.insertAdjacentHTML('afterbegin', modifiedHeader)
+document.body.insertAdjacentHTML('beforeend', footer)

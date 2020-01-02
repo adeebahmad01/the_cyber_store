@@ -1,4 +1,4 @@
-.waves-effect {
+#slide-out .waves-effect {
   padding: 1rem 0;
   background: none;
   width: 100%;
@@ -8,7 +8,7 @@
   margin: 1rem;
 }
 
-.waves-effect:hover {
+#slide-out .waves-effect:hover {
   background: #ddd;
 }
 

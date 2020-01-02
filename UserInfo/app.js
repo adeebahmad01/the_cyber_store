@@ -9,6 +9,9 @@ const checkReferrer = ()=>{
     location.replace(href.join('/')) 
   }, 5000)
 }
+import header from '../utils/Header.js';
+import footer from '../utils/Footer.js';
+let modifiedHeader;
 if (localStorage.getItem("userIndex") !== null) {
   //! Getting Array From
   const loginUsers =
@@ -38,3 +41,19 @@ if (localStorage.getItem("userIndex") !== null) {
 else{
   checkReferrer()
 }
+
+modifiedHeader = header.replace(/%NAME1%/g, `Home`)
+modifiedHeader = modifiedHeader.replace(/%HREF1%/g, `../HomePage/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME2%/g, `My Cart`)
+modifiedHeader = modifiedHeader.replace(/%HREF2%/g, `../Cart/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME3%/g, `My Products`)
+modifiedHeader = modifiedHeader.replace(/%HREF3%/g, `../UserProducts/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME4%/g, `Edit Details`)
+modifiedHeader = modifiedHeader.replace(/%HREF4%/g, `../UserEditProfile/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME5%/g, `All Products`)
+modifiedHeader = modifiedHeader.replace(/%HREF5%/g, `../AllProducts/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME6%/g, `Forgot Password`)
+modifiedHeader = modifiedHeader.replace(/%HREF6%/g, `../ForgotPassword/index.html`)
+
+document.body.insertAdjacentHTML('afterbegin', modifiedHeader)
+document.body.insertAdjacentHTML('beforeend', footer)

@@ -1,5 +1,8 @@
 //? Making html Markup
-const html = `<div class="col l3 m4 s6 %catagory%"><div style="overflow:hidden" class="card"><div style="position:relative;overflow:visible" class="card-image waves-effect waves-block waves-light"><button class="btn-floating halfway-fab cart waves-effect waves-light red"><i class="material-icons">add</i></button><img draggable="false" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)" src="%image%" alt="%title%"/></div><div class="card-content"><span class="card-title activator grey-text text-darken-4">%title%<i class="material-icons right">more_vert</i></span><p><a class="link" href="../ProductInfo/index.html?id=%index%">View More</a></p></div><div class="card-reveal"><span class="card-title grey-text text-darken-4">%title%<i class="material-icons right">close</i></span><ul>%description%</ul></div></div></div>`;
+const html = `<div class="col filter l3 m4 s6 %catagory%"><div style="overflow:hidden" class="card"><div style="position:relative;overflow:visible" class="card-image waves-effect waves-block waves-light"><button class="btn-floating halfway-fab cart waves-effect waves-light red"><i class="material-icons">add</i></button><img draggable="false" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)" src="%image%" alt="%title%"/></div><div class="card-content"><span class="card-title activator grey-text text-darken-4">%title%<i class="material-icons right">more_vert</i></span><p><a class="link" href="../ProductInfo/index.html?id=%index%">View More</a></p></div><div class="card-reveal"><span class="card-title grey-text text-darken-4">%title%<i class="material-icons right">close</i></span><ul>%description%</ul></div></div></div>`;
+import header from '../utils/Header.js';
+import footer from '../utils/Footer.js';
+let modifiedHeader;
 const products = JSON.parse(localStorage.getItem('productIntro')) || [];
 const cart = JSON.parse(localStorage.getItem('cart')) || [];
 //! The newly added products by user
@@ -129,22 +132,7 @@ allProducts.forEach((el,i) => {
   a===3? rowIdHtml++: ``
   htmlElement.insertAdjacentHTML("beforeend", newHtml);
 });
-setTimeout(()=>{
-  const heights = Array.from(document.querySelectorAll('img')).map(el=> el.offsetHeight)
-  let maxHeight
-  setTimeout(() => {
-    maxHeight = Math.max(...heights)
-    document.querySelectorAll(`.card-image`).forEach(el=> el.style.height = `${maxHeight+20}px`)
-  }, 50);
-},200)
-setTimeout(()=>{
-  const heights = Array.from(document.querySelectorAll('.card-content')).map(el=> el.offsetHeight)
-  let maxHeight
-  setTimeout(() => {
-    maxHeight = Math.max(...heights)
-    document.querySelectorAll(`.card-content`).forEach(el=> el.style.height = `${maxHeight+20}px`)
-  }, 50);
-},200);
+
 
 //* Initializing Materialize
 M.AutoInit();
@@ -171,7 +159,7 @@ catagories.forEach(el=>{
   capital[0] = capital[0].toUpperCase()
   capital = capital.join(``)
   const markup = `
-  <li><button class="waves-effect ${el}-btn">${capital}</button></li>
+  <li><button class="waves-effect  ${el}-btn">${capital}</button></li>
   <li>
     <div class="divider"></div>
   </li>`
@@ -181,7 +169,7 @@ catagories.forEach(el=>{
 let array;
 
 //? To show all products
-const showAll = ()=> document.querySelectorAll(".col").forEach(el=>{
+document.querySelector('.all-btn').onclick = ()=> document.querySelectorAll(".filter").forEach(el=>{
   elements.productName.innerHTML = ``;
   el.classList.remove(`hidden`);
   el.classList.remove(`fade`);
@@ -189,12 +177,10 @@ const showAll = ()=> document.querySelectorAll(".col").forEach(el=>{
 
 //! TO show selected products
 const showProducts = (nameProduct)=>{
-  let rowCata = 0;
-  let rowCataHtml = 0;
   //* Selecting all elements with class of catagory
   array = document.querySelectorAll(`.${nameProduct}`)
   //? Selecting all cards
-  const allProducts = document.querySelectorAll(".col");
+  const allProducts = document.querySelectorAll(".filter");
   
   //! Adding Class of Hidden
   allProducts.forEach(el => el.classList.add("hidden"));
@@ -240,3 +226,37 @@ cartBtns.forEach((el,i)=> el.addEventListener('click',()=>{
   }
   localStorage.setItem('cart',JSON.stringify(cart))
 }))
+
+window.addEventListener('load', ()=>{
+  setTimeout(()=>{
+    const heights = Array.from(document.querySelectorAll('img')).map(el=> el.offsetHeight)
+    let maxHeight
+    setTimeout(() => {
+      maxHeight = Math.max(...heights)
+      document.querySelectorAll(`.card-image`).forEach(el=> el.style.height = `${maxHeight+20}px`)
+    }, 0);
+  },1)
+  setTimeout(()=>{
+    const heights = Array.from(document.querySelectorAll('.card-content')).map(el=> el.offsetHeight)
+    let maxHeight
+    setTimeout(() => {
+      maxHeight = Math.max(...heights)
+      document.querySelectorAll(`.card-content`).forEach(el=> el.style.height = `${maxHeight+20}px`)
+    }, 0);
+  },1);
+})
+modifiedHeader = header.replace(/%NAME1%/g, `Home`)
+modifiedHeader = modifiedHeader.replace(/%HREF1%/g, `../HomePage/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME2%/g, `My Cart`)
+modifiedHeader = modifiedHeader.replace(/%HREF2%/g, `../Cart/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME3%/g, `My Products`)
+modifiedHeader = modifiedHeader.replace(/%HREF3%/g, `../UserProducts/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME4%/g, `My Details`)
+modifiedHeader = modifiedHeader.replace(/%HREF4%/g, `../UserInfo/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME5%/g, `Sign Up`)
+modifiedHeader = modifiedHeader.replace(/%HREF5%/g, `../SignUp/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME6%/g, `Forgot Password`)
+modifiedHeader = modifiedHeader.replace(/%HREF6%/g, `../ForgotPassword/index.html`)
+
+document.body.insertAdjacentHTML('afterbegin', modifiedHeader)
+document.body.insertAdjacentHTML('beforeend', footer)

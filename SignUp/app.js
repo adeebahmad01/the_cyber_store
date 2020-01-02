@@ -1,6 +1,8 @@
 //? Remove the user index if the user is on sign up page
 localStorage.removeItem("userIndex");
-
+import header from '../utils/Header.js';
+import footer from '../utils/Footer.js';
+let modifiedHeader;
 //! Getting Array From
 const signupUsers =
   JSON.parse(localStorage.getItem("users")) === null
@@ -172,3 +174,18 @@ signupElements.userName.addEventListener("blur", e =>
 signupElements.passwordConfirm.addEventListener("blur", e =>
   signupFunctions.passConfirmation(signupElements.password.value,e.target.value)
 );
+
+signupElements.form.onsubmit=()=> signupFunctions.userAdd()
+modifiedHeader = header.replace(/%NAME1%/g, `Home`)
+modifiedHeader = modifiedHeader.replace(/%HREF1%/g, `../HomePage/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME2%/g, `All Products`)
+modifiedHeader = modifiedHeader.replace(/%HREF2%/g, `../AllProducts/index.html`)
+modifiedHeader = modifiedHeader.replace(/%display3%/g, `none`)
+modifiedHeader = modifiedHeader.replace(/%display4%/g, `none`)
+modifiedHeader = modifiedHeader.replace(/%NAME5%/g, `Login`)
+modifiedHeader = modifiedHeader.replace(/%HREF5%/g, `../Login/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME6%/g, `Forgot Password`)
+modifiedHeader = modifiedHeader.replace(/%HREF6%/g, `../ForgotPassword/index.html`)
+
+document.body.insertAdjacentHTML('afterbegin', modifiedHeader)
+document.body.insertAdjacentHTML('beforeend', footer)

@@ -1,4 +1,7 @@
 const html = `<li class="collection-item avatar" id="%I%"><div class="div cancel"><button class="transparent delete btn grey-text">&rotimes;</button></div><img src="%IMAGE%" alt="" class="circle" /><span style="font-size: 1.8rem;" class="title">%TITLE%</span><p><span>%PRICE%</span><br /><span>%CATAGORY%</span></p><a href="../OrderInfo/index.html?id=%I%" class="orderBtn btn grey white-text waves-effect waves-block">Order</a><div class="secondary-content"><div class="div up"><button class="btn-small increase transparent grey-text">&bigtriangleup;</button></div><div class="q" contenteditable="true" id="%I%">%QUANTITY%</div><div class="div down"><button class="btn-small decrease transparent grey-text">&bigtriangledown;</button></div></div></li>`;
+import header from '../utils/Header.js';
+import footer from '../utils/Footer.js';
+let modifiedHeader;
 const products = JSON.parse(localStorage.getItem('productIntro')) || [];
 const cart = JSON.parse(localStorage.getItem('cart')) || [];
 //! The newly added products by user
@@ -46,10 +49,10 @@ jsRenderElements.btnInc.forEach((el)=>{
   el.addEventListener('click',(e)=>{
     //! UI
     let q = e.target.parentNode.nextElementSibling;
-    const price = e.target.parentNode.parentNode.previousElementSibling.previousElementSibling.firstElementChild.innerHTML
+    const price = cartProducts[q.id].price
     let innerhtml;
-    if(q.innerHTML === `0`){
-      innerhtml = `1`
+    if(q.innerHTML === `-1`){
+      innerhtml = `0`
     }else{
       innerhtml = Math.ceil(+q.innerHTML);
     }
@@ -65,10 +68,10 @@ jsRenderElements.btnDec.forEach(el=>{
   el.addEventListener('click',(e)=>{
     //! UI
     const q = e.target.parentNode.previousElementSibling;
-    const price = e.target.parentNode.parentNode.previousElementSibling.previousElementSibling.firstElementChild.innerHTML
+    const price = cartProducts[q.id].price
     let innerhtml;
-    if(q.innerHTML === `0`){
-      innerhtml = `1`
+    if(q.innerHTML === `-1`){
+      innerhtml = `0`
     }else{
       innerhtml = Math.ceil(+q.innerHTML);
     }
@@ -109,3 +112,25 @@ document.querySelectorAll('.delete').forEach((el,i)=>{
     itemPrice.remove()
   })
 })
+document.querySelectorAll('.q').forEach(el=>{
+  el.addEventListener('keyup',(e)=>{
+    const i = e.target.id
+    document.querySelector(`.price${i}`).innerHTML = `$${calculateTotal(e.target.innerHTML, cartProducts[i].price).toFixed(2)}`;
+  })
+})
+
+
+modifiedHeader = header.replace(/%NAME1%/g, `Home`)
+modifiedHeader = modifiedHeader.replace(/%HREF1%/g, `../HomePage/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME2%/g, `Products`)
+modifiedHeader = modifiedHeader.replace(/%HREF2%/g, `../AllProducts/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME3%/g, `My Products`)
+modifiedHeader = modifiedHeader.replace(/%HREF3%/g, `../UserProducts/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME4%/g, `My Details`)
+modifiedHeader = modifiedHeader.replace(/%HREF4%/g, `../UserInfo/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME5%/g, `Add Products`)
+modifiedHeader = modifiedHeader.replace(/%HREF5%/g, `../UploadProducts/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME6%/, `Forgot Password`)
+modifiedHeader = modifiedHeader.replace(/%HREF6%/, `../ForgotPassword/index.html`)
+document.body.insertAdjacentHTML('afterbegin', modifiedHeader)
+document.body.insertAdjacentHTML('beforeend', footer)

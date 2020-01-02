@@ -32,7 +32,10 @@
       </div>
   </form>
 </body>
-<script>
+<script type="module">
+  import header from '../utils/Header.js';
+  import footer from '../utils/Footer.js';
+  let modifiedHeader;
   //`Getting Array of users from localStorage`
   const passUpdateUsers = JSON.parse(localStorage.getItem("users")) === null ? [] : JSON.parse(localStorage.getItem("users"));
 
@@ -88,6 +91,20 @@
     }, 5000)
   }
 }
-checkReferrer()
+checkReferrer();
+
+modifiedHeader = header.replace(/%NAME1%/g, `Home`)
+modifiedHeader = modifiedHeader.replace(/%HREF1%/g, `../HomePage/index.html`)
+modifiedHeader = modifiedHeader.replace(/%display2%/g, `none`)
+modifiedHeader = modifiedHeader.replace(/%display3%/g, `none`)
+modifiedHeader = modifiedHeader.replace(/%NAME4%/g, `Login`)
+modifiedHeader = modifiedHeader.replace(/%HREF4%/g, `../Login/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME5%/g, `Sign Up`)
+modifiedHeader = modifiedHeader.replace(/%HREF5%/g, `../SignUp/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME6%/g, `All Products`)
+modifiedHeader = modifiedHeader.replace(/%HREF6%/g, `../AllProducts/index.html`)
+
+document.body.insertAdjacentHTML('afterbegin', modifiedHeader)
+document.body.insertAdjacentHTML('beforeend', footer)
 </script>
 </html>

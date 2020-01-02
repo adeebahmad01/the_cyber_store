@@ -1,6 +1,9 @@
 const userIndex = +localStorage.getItem("userIndex");
 const users = JSON.parse(localStorage.getItem("users"));
-let values
+let values;
+import header from '../utils/Header.js';
+import footer from '../utils/Footer.js';
+let modifiedHeader;
 if (localStorage.getItem("userIndex") !== null) {
   values = {
     email: document.getElementById("email"),
@@ -10,7 +13,8 @@ if (localStorage.getItem("userIndex") !== null) {
     adress: document.getElementById("adress"),
     city: document.getElementById("city"),
     country: document.getElementById("country"),
-    resPg: document.querySelector(".pRes")
+    resPg: document.querySelector(".pRes"),
+    form: document.querySelector('form')
   };
   const Show = () => {
     values.email.value = users[userIndex].email;
@@ -45,6 +49,8 @@ const Edit = () => {
   }
   return false;
 };
+
+values.form.onsubmit = ()=> Edit();
 const checkValid = (input, arr, name, el) => {
 
   if (arr.includes(input)) {
@@ -56,3 +62,19 @@ const checkValid = (input, arr, name, el) => {
   }
   return arr.includes(input);
 };
+
+
+modifiedHeader = header.replace(/%NAME1%/g, `Products`)
+modifiedHeader = modifiedHeader.replace(/%HREF1%/g, `../AllProducts/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME2%/g, `My Cart`)
+modifiedHeader = modifiedHeader.replace(/%HREF2%/g, `../Cart/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME3%/g, `My Products`)
+modifiedHeader = modifiedHeader.replace(/%HREF3%/g, `../UserProducts/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME4%/g, `My Details`)
+modifiedHeader = modifiedHeader.replace(/%HREF4%/g, `../UserInfo/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME5%/g, `Login`)
+modifiedHeader = modifiedHeader.replace(/%HREF5%/g, `../Login/index.html`)
+modifiedHeader = modifiedHeader.replace(/%NAME6%/, `Forgot Password`)
+modifiedHeader = modifiedHeader.replace(/%HREF6%/, `../ForgotPassword/index.html`)
+document.body.insertAdjacentHTML('afterbegin', modifiedHeader)
+document.body.insertAdjacentHTML('beforeend', footer)
