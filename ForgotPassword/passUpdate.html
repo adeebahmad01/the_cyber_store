@@ -13,7 +13,7 @@
 </head>
 <body>
   <h1>Reset Password</h1>  
-  <form action="/Login/index.html" onsubmit="return updatePass()">
+  <form action="../Login/index.html">
     <div class="row">
         <div class="input-field col s4">
           <input type="password" id="pass" class="validate" />
@@ -75,7 +75,7 @@
       return false
     }
   }
-
+  document.querySelector('form').onsubmit = ()=> updatePass()
   // Additional Restriction function
   const checkReferrer = ()=>{
   const href = location.href.split('/');
