@@ -1,0 +1,37 @@
+.outer{
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.267);
+  z-index: 10;
+}
+.inner{
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  text-align: center;
+  font-size: 2rem;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+}
+.inner a{
+  width: 30%;
+  padding: 10px;
+  box-sizing: content-box;
+  background-image: linear-gradient(to right bottom, #5432fa 10%,#2998ff 20%,#2998ff 80%,#5432fa 90%);
+  color: white !important;
+  border-radius: 10px;
+  margin: 10px;
+  font-size: 1.1rem;
+}
+.inner a:hover{
+  background-image: linear-gradient(to left bottom, #5432fa 10%,#2998ff 20%,#2998ff 80%,#5432fa 90%);
+}
+.invisible{
+  opacity: 0;
+  visibility: hidden;
+}

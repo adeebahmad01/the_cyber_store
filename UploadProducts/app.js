@@ -2,7 +2,6 @@ import header from '../utils/Header.js';
 import footer from '../utils/Footer.js';
 let modifiedHeader;
 const userIndex = localStorage.getItem("userIndex");
-const products = JSON.parse(localStorage.getItem('productIntro')) || []; 
 let imageSrc, htmlMarkup;
 if (userIndex !== null) {
   let markups = JSON.parse(localStorage.getItem("userProducts")) || [];
@@ -29,11 +28,6 @@ if (userIndex !== null) {
     }
   }
   uploadProductElements.form.addEventListener("submit", (e) => {
-    e.preventDefault()
-    products.forEach(el=>{
-      el.index = +el.index+1;
-      console.log(el.index)
-    })
     const values = {
       title: uploadProductElements.title.value,
       features: uploadProductElements.features.value,
@@ -52,7 +46,6 @@ if (userIndex !== null) {
     markups.unshift(element);
     markups.forEach((el,i)=> el.index = i)
     localStorage.setItem("userProducts", JSON.stringify(markups));
-    localStorage.setItem("productIntro", JSON.stringify(products));
   });
   const displayCard = () => {
     htmlMarkup = `

@@ -9,7 +9,7 @@
       href="../materialize.css"
     />
     <script src="../materialize.js"></script>
-     
+     <link rel="stylesheet" href="style.css">
     <title>Login</title>
   </head>
   <body>
@@ -17,7 +17,7 @@
       <div class="col s4"><h1>Log In</h1></div>
     </div>
     
-    <form action="../HomePage/index.html">
+    <form action="../HomePage/index.html" onsubmit="event.preventDefault()">
       <div class="row">
         <div class="input-field col s4 ">
           <input type="email" id="email" class="validate" />
@@ -32,8 +32,15 @@
           <p class="passRes"></p>
         </div>
       </div>
-      <div class="row"><div class="col s3"><button class="btn">Login</button></div></div>
+      <div class="row"><div class="col s3"><button class="btn login">Login</button></div></div>
     </form>
+    <div class="outer invisible">
+      <div class="inner invisible">
+        <p>Do you want to save your cart?</p>
+          <a href="../index.html" class="btn yes">yes</a>
+          <a href="../index.html" class="btn no">no</a>
+      </div>
+    </div>
   </body>
   <script type="module" src="app.js"></script>
 </html>

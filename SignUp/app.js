@@ -2,7 +2,7 @@
 localStorage.removeItem("userIndex");
 import header from '../utils/Header.js';
 import footer from '../utils/Footer.js';
-let modifiedHeader;
+let modifiedHeader,myFooter;
 //! Getting Array From
 const signupUsers =
   JSON.parse(localStorage.getItem("users")) === null
@@ -186,6 +186,6 @@ modifiedHeader = modifiedHeader.replace(/%NAME5%/g, `Login`)
 modifiedHeader = modifiedHeader.replace(/%HREF5%/g, `../Login/index.html`)
 modifiedHeader = modifiedHeader.replace(/%NAME6%/g, `Forgot Password`)
 modifiedHeader = modifiedHeader.replace(/%HREF6%/g, `../ForgotPassword/index.html`)
-
+myFooter = footer.replace(/Logout/g, `Login`)
 document.body.insertAdjacentHTML('afterbegin', modifiedHeader)
-document.body.insertAdjacentHTML('beforeend', footer)
+document.body.insertAdjacentHTML('beforeend', myFooter)

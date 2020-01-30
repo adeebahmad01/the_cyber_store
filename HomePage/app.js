@@ -20,9 +20,7 @@ const equalHeight = parent => {
     }, 50);
   }, 200);
   setTimeout(() => {
-    const heights = Array.from(
-      document.querySelectorAll(`${parent} .card-content`)
-    ).map(el => el.offsetHeight);
+    const heights = Array.from(document.querySelectorAll(`${parent} .card-content`)).map(el => el.offsetHeight);
     let maxHeight;
     setTimeout(() => {
       maxHeight = Math.max(...heights);
@@ -33,7 +31,7 @@ const equalHeight = parent => {
   }, 200);
 };
 
-const products = JSON.parse(localStorage.getItem("productIntro"));
+import products from '../utils/adminProducts.js';
 const userProducts = JSON.parse(localStorage.getItem("userProducts"));
 const users = JSON.parse(localStorage.getItem("users")) || [];
 const catagories = ["mouse", `keyboard`, `laptop`, "cpu", "headphone"];
@@ -52,9 +50,7 @@ const elements = {
 };
 
 const catagoryIndex = Math.floor(Math.random() * catagories.length);
-const catagoryProducts = products.filter(
-  el => el.catagory === catagories[catagoryIndex]
-);
+const catagoryProducts = products.filter(el => el.catagory === catagories[catagoryIndex]);
 elements.catagoryName.innerHTML = catagories[catagoryIndex].toUpperCase();
 catagoryProducts.forEach(el => {
   let newHtml = html.replace(/%catagory%/g, el.catagory);
@@ -62,6 +58,7 @@ catagoryProducts.forEach(el => {
   newHtml = newHtml.replace(/%image%/g, el.image);
   newHtml = newHtml.replace(/%description%/g, el.description);
   newHtml = newHtml.replace(/%index%/g, el.index);
+  newHtml = newHtml.replace(/%price%/g, el.price)
   elements.catagoryRow.insertAdjacentHTML("beforeend", newHtml);
 });
 if (userIndex) {
@@ -70,14 +67,7 @@ if (userIndex) {
   elements.userName.innerHTML = users[userIndex].userName;
   elements.userId.innerHTML = users[userIndex].id;
 } else {
-  elements.infoContainer.innerHTML = `
-  <div class="row">
-    <div class="s12 center-align"><img src="../images/gmail.png" alt="Login" class="img" width="150px"></div>
-  </div>
-  <div class="row">
-    <div class="col s6 center-align"><a href="../Login/index.html" class="btn white grey-text center">Login</a></div>
-    <div class="col s6 center-align"><a href="../SignUp/index.html" class="btn white grey-text center">SignUp</a></div>
-  </div>`;
+  elements.infoContainer.innerHTML = `<div class="row"><div class="s12 center-align"><img src="../images/gmail.png" alt="Login" class="img" width="150px"></div></div><div class="row"><div class="col s6 center-align"><a href="../Login/index.html" class="btn white grey-text center">Login</a></div><div class="col s6 center-align"><a href="../SignUp/index.html" class="btn white grey-text center">SignUp</a></div></div>`;
 }
 const createHtml = () => {
   const abc = document.createElement("div");
@@ -98,6 +88,7 @@ newProducts.forEach(el => {
   newHtml = newHtml.replace(/%image%/g, el.image);
   newHtml = newHtml.replace(/%description%/g, el.description);
   newHtml = newHtml.replace(/%index%/g, el.index);
+  newHtml = newHtml.replace(/%price%/g, el.price)
   let htmlElement = document.getElementById(`row-${rowIdHtml}`);
   equalHeight(`#row-${rowIdHtml}`);
   a === 3 ? rowIdHtml++ : ``;
@@ -119,51 +110,23 @@ let myCart;
 const cartId = cart.map(el => el.productId);
 cartBtns.forEach((el, i) =>
   el.addEventListener("click", e => {
-    i = e.target.parentNode.parentNode.nextElementSibling.lastElementChild.lastElementChild.href.split(
-      `=`
-    )[1];
-    console.log(i);
+    i = document.querySelectorAll('.row a')[i].href.split(`=`)[1];
     const cartProduct = allProducts[i];
     const productAdmin = { ...users[cartProduct.userIndex] };
     if (!cartProduct.userIndex || cartProduct.userIndex === `-1`) {
       cartProduct.userIndex = `-1`;
       productAdmin.id = `ADMIN`;
     }
-    if (userIndex) {
-      if (cartId.includes(cartProduct.id)) {
-        cart[cartId.indexOf(cartProduct.id)].quantity++;
-      } else {
-        myCart = new Cart(
-          cartProduct.index,
-          cartProduct.userIndex,
-          productAdmin.id,
-          cartProduct.id,
-          1
-        );
-        cart.push(myCart);
-        cartId.push(myCart.productId);
-      }
+    if (cartId.includes(cartProduct.id)) {
+      cart[cartId.indexOf(cartProduct.id)].quantity++;
     } else {
-      if (cartId.includes(cartProduct.id)) {
-        cart[cartId.indexOf(cartProduct.id)].quantity++;
-      } else {
-        myCart = new Cart(
-          cartProduct.index,
-          cartProduct.userIndex,
-          productAdmin.id,
-          cartProduct.id,
-          1
-        );
-        cart.push(myCart);
-        cartId.push(myCart.productId);
-      }
+      myCart = new Cart(cartProduct.index,cartProduct.userIndex,productAdmin.id,cartProduct.id,1);
+      cart.push(myCart);
+      cartId.push(myCart.productId);
     }
     localStorage.setItem("cart", JSON.stringify(cart));
   })
 );
-// setInterval(()=>{
-  
-// },1000)
 window.addEventListener('load', ()=>{
   equalHeight(`.catagory`);
   for (let i = 0; i < rowId; i++) {

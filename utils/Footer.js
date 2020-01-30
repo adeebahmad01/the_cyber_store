@@ -11,7 +11,7 @@ const footer =
           <div class="col s6 full">
             <img src="../images/logo.png" width="300" alt="Cyber Store"/>
           </div>
-          <div class="col s6  ">
+          <div class="col s6">
             <div class=" ">
               <h1 class="footer-h1">Emails</h1>
               <div class="row">

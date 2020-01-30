@@ -1,5 +1,5 @@
 const productIndex = location.href.split("=")[1];
-const products = JSON.parse(localStorage.getItem("productIntro"));
+import products from '../utils/adminProducts.js';
 const userProducts = JSON.parse(localStorage.getItem("userProducts"));
 let allProducts, pIndex,image;
 import header from '../utils/Header.js';
@@ -102,13 +102,12 @@ if (productIndex) {
       }
     });
     elements.form.addEventListener("submit", () => {
-      event.preventDefault()
       product.title = values.title;
       product.feature = values.features;
       product.catagory = values.catagory;
       product.price = `$${values.price}`;
       product.description = values.description;
-      imageSrc.readyState > 0 ? product.image = imageSrc.result :``;
+      imageSrc? (imageSrc.readyState > 0 ? product.image = imageSrc.result :``): ``;
       userProducts[pIndex] = product;
       localStorage.setItem("userProducts", JSON.stringify(userProducts));
     });

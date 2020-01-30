@@ -4,12 +4,11 @@ import footer from '../utils/Footer.js';
 let modifiedHeader;
 let rowId = 0;
 let rowIdHtml = 0;
-const products = JSON.parse(localStorage.getItem("productIntro"));
+import products from '../utils/adminProducts.js';
 const userProducts = JSON.parse(localStorage.getItem("userProducts"));
 const allProducts = userProducts ? [...userProducts,...products] : products;
 const userIndex = localStorage.getItem("userIndex");
 if (userIndex !== null) {
-  const parentEl = document.querySelector(".row");
   const myProducts = allProducts.filter(el => el.userIndex === userIndex);
   if (myProducts.length === 0) {
     document.body.innerHTML = `<h1>Please Add Products</h1><a href="../UploadProducts/index.html">Add Products</a>`;
@@ -29,6 +28,7 @@ if (userIndex !== null) {
     let newHtml = html.replace(/%catagory%/g, el.catagory);
     newHtml = newHtml.replace(/%title%/g, el.title);
     newHtml = newHtml.replace(/%image%/g, el.image);
+    newHtml = newHtml.replace(/%price%/g, el.price)
     newHtml = newHtml.replace(/%description%/g, el.description);
     newHtml = newHtml.replace(/%index%/g, el.index);
     newHtml = newHtml.replace('<button class="btn-floating halfway-fab cart waves-effect waves-light red"><i class="material-icons">add</i></button>',``)
@@ -48,7 +48,7 @@ modifiedHeader = modifiedHeader.replace(/%HREF1%/g, `../HomePage/index.html`)
 modifiedHeader = modifiedHeader.replace(/%NAME2%/g, `My Cart`)
 modifiedHeader = modifiedHeader.replace(/%HREF2%/g, `../Cart/index.html`)
 modifiedHeader = modifiedHeader.replace(/%NAME3%/g, `Products`)
-modifiedHeader = modifiedHeader.replace(/%HREF3%/g, `../All Products/index.html`)
+modifiedHeader = modifiedHeader.replace(/%HREF3%/g, `../AllProducts/index.html`)
 modifiedHeader = modifiedHeader.replace(/%NAME4%/g, `My Details`)
 modifiedHeader = modifiedHeader.replace(/%HREF4%/g, `../UserInfo/index.html`)
 modifiedHeader = modifiedHeader.replace(/%NAME5%/g, `Login`)

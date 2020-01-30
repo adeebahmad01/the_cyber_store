@@ -15,11 +15,14 @@ const loginElements ={
   email: document.querySelector('#email'),
   password: document.querySelector('#password'),
   passRes: document.querySelector('.passRes'),
-  emailRes: document.querySelector('.emailRes')
+  emailRes: document.querySelector('.emailRes'),
+  btn: document.querySelector('.login')
 }
-const checkArray = () =>{
+const checkArray = (e) =>{
+  e.preventDefault()
   if (emailArr.includes(loginElements.email.value)) {
     let index = emailArr.indexOf(loginElements.email.value);
+    document.body.style.overflow = `hidden`
     localStorage.setItem('userIndex', index)
     return checkPassword(loginElements.password.value,index,passwords);
   }
@@ -37,8 +40,7 @@ const checkPassword = (input, i, array)=>{
   return true
 }
 
-loginElements.form.onsubmit= ()=> checkArray()
-
+loginElements.form.onsubmit= (e)=> checkArray(e)
 modifiedHeader = header.replace(/%NAME1%/g, `Home`)
 modifiedHeader = modifiedHeader.replace(/%HREF1%/g, `../HomePage/index.html`)
 modifiedHeader = modifiedHeader.replace(/%NAME2%/g, `My Cart`)

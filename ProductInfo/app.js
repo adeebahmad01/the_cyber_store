@@ -5,10 +5,12 @@ let modifiedHeader;
 const users = JSON.parse(localStorage.getItem('users')) || [];
 const productIndex = location.href.split('=')[1]
 let product;
-if(JSON.parse(localStorage.getItem('userProducts'))){
-  product = [...JSON.parse(localStorage.getItem('userProducts')),... JSON.parse(localStorage.getItem('productIntro'))][productIndex];
+const userProducts = JSON.parse(localStorage.getItem('userProducts'));
+import myProducts from '../utils/adminProducts.js';
+if(userProducts){
+  product = [...userProducts,...myProducts][productIndex];
 }else{
-  product = JSON.parse(localStorage.getItem('productIntro'))[productIndex]
+  product = myProducts[productIndex]
 }
 const elements = {
   name: document.querySelector('.name'),

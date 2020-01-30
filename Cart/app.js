@@ -2,53 +2,55 @@ const html = `<li class="collection-item avatar" id="%I%"><div class="div cancel
 import header from '../utils/Header.js';
 import footer from '../utils/Footer.js';
 let modifiedHeader;
-const products = JSON.parse(localStorage.getItem('productIntro')) || [];
-const cart = JSON.parse(localStorage.getItem('cart')) || [];
+import products from '../utils/adminProducts.js';
+let cart;
 //! The newly added products by user
-const users = JSON.parse(localStorage.getItem('users')) || []
-const userIndex = JSON.parse(localStorage.getItem('userIndex'));
+const users = JSON.parse(localStorage.getItem('users')) || [];
+const userIndex = localStorage.getItem('userIndex');
 let userProducts = JSON.parse(localStorage.getItem('userProducts')) || [];
 const allProducts = userProducts ? [...userProducts,...products] : products;
 const elements = {
-  collection: document.querySelector('.collection')
+  collection: document.querySelector('#product'),
+  amount: document.querySelector('#amount')
 }
-const ids = allProducts.map(el=>el.id)
-let rowId = 0;
-let rowIdHtml = 0;
+const ids = allProducts.map(el=>el.id);
+if(!userIndex){
+  cart = JSON.parse(localStorage.getItem('cart')) || []
+}else{
+  cart = users[userIndex].cart || [];
+}
 const cartProducts = cart.map(el=>{
   if(ids.includes(el.productId)){
     const index = ids.indexOf(el.productId);
-    allProducts[index].quantity = el.quantity
-    return allProducts[index]
+    allProducts[index].quantity = el.quantity;
+    return allProducts[index];
   }
 });
-
+console.log(cartProducts)
 const calculateTotal = (amount,price)=>{
   let prices = +price.split(`$`)[1];
-  return prices * amount
+  return prices * amount;
 }
-
 const renderHtml = (el,i) => {
-  let newHtml = html.replace(/%IMAGE%/g , el.image)
-  newHtml = newHtml.replace(/%TITLE%/g , el.title)
-  newHtml = newHtml.replace(/%PRICE%/g , el.price)
-  newHtml = newHtml.replace(/%CATAGORY%/g , el.catagory)
-  newHtml = newHtml.replace(/%QUANTITY%/g , el.quantity)
-  newHtml = newHtml.replace(/%I%/g , i)
-  elements.collection.insertAdjacentHTML('afterbegin', newHtml)
+  let newHtml = html.replace(/%IMAGE%/g , el.image);
+  newHtml = newHtml.replace(/%TITLE%/g , el.title);
+  newHtml = newHtml.replace(/%PRICE%/g , el.price);
+  newHtml = newHtml.replace(/%CATAGORY%/g , el.catagory);
+  newHtml = newHtml.replace(/%QUANTITY%/g , el.quantity);
+  newHtml = newHtml.replace(/%I%/g , i);
+  elements.collection.insertAdjacentHTML('afterbegin', newHtml);
 };
-const collection = document.querySelector('.collection');
-cartProducts.forEach(renderHtml)
+cartProducts.forEach(renderHtml);
 
 const jsRenderElements = {
   btnInc: document.querySelectorAll('.increase'),
   btnDec: document.querySelectorAll('.decrease'),
   quantity:document.querySelector('.q')
 }
-jsRenderElements.btnInc.forEach((el)=>{
-  el.addEventListener('click',(e)=>{
+jsRenderElements.btnInc.forEach((el,i)=>{
+  el.addEventListener('click',()=>{
     //! UI
-    let q = e.target.parentNode.nextElementSibling;
+    let q = document.querySelectorAll('.q')[i];
     const price = cartProducts[q.id].price
     let innerhtml;
     if(q.innerHTML === `-1`){
@@ -60,14 +62,14 @@ jsRenderElements.btnInc.forEach((el)=>{
     q.innerHTML = `${innerhtml}`
     cartProducts[q.id].quantity = innerhtml;
     cart[q.id].quantity = innerhtml;
-    document.querySelector(`.price${q.id}`).innerHTML = `$`+ calculateTotal(innerhtml,price).toFixed(2);
+    document.querySelector(`.price${q.id}`).innerHTML = `$ ${calculateTotal(innerhtml,price).toFixed(2)}`;
     localStorage.setItem('cart',JSON.stringify(cart))
-  })
+  });
 })
-jsRenderElements.btnDec.forEach(el=>{
-  el.addEventListener('click',(e)=>{
+jsRenderElements.btnDec.forEach((el,i)=>{
+  el.addEventListener('click',()=>{
     //! UI
-    const q = e.target.parentNode.previousElementSibling;
+    const q = document.querySelectorAll('.q')[i];
     const price = cartProducts[q.id].price
     let innerhtml;
     if(q.innerHTML === `-1`){
@@ -82,32 +84,28 @@ jsRenderElements.btnDec.forEach(el=>{
     q.innerHTML = `${innerhtml}`
     cartProducts[q.id].quantity = innerhtml;
     cart[q.id].quantity = innerhtml;
-    document.querySelector(`.price${q.id}`).innerHTML = `$`+ calculateTotal(innerhtml,price).toFixed(2);
-    localStorage.setItem('cart',JSON.stringify(cart))
+    document.querySelector(`.price${q.id}`).innerHTML = `$ ${calculateTotal(innerhtml,price).toFixed(2)}`;
+    localStorage.setItem('cart',JSON.stringify(cart));
   })
 })
-const createListItems = (i)=>{
+cartProducts.forEach((el,i)=>{
   const abc = document.createElement('li');
   abc.classList.add('collection-item');
   abc.id = `item${i}`;
-  abc.innerHTML = `<h4>Total: <span class="price${i}">${cartProducts[i].price}</span></h4>`
-  abc.style.height = `${zero.firstElementChild.offsetHeight}px`;
-  one.insertAdjacentElement('afterbegin', abc)
-}
-for (let i = 0; i < cart.length; i++) {
-  createListItems(i)
-}
-
+  abc.innerHTML = `<h4>Total: <span class="price${i}">${el.price}</span></h4>`
+  abc.style.height = `${elements.collection.firstElementChild.offsetHeight}px`;
+  elements.amount.insertAdjacentElement('afterbegin', abc);
+})
 cartProducts.forEach((el,i)=>{
   document.querySelector(`.price${i}`).innerHTML = `$${calculateTotal(el.quantity,el.price).toFixed(2)}`
 })
 document.querySelectorAll('.delete').forEach((el,i)=>{
   el.addEventListener('click', e=>{
     const item = e.target.parentNode.parentNode;
-    cart.splice(+item.id,1)
+    cart.splice(+item.id,1);
     item.remove();
     localStorage.setItem('cart',JSON.stringify(cart));
-    const priceArray = Array.from(document.getElementById('one').children);
+    const priceArray = Array.from(elements.amount.children);
     const itemPrice = priceArray.find(el=>el.id === `item${item.id}`);
     itemPrice.remove()
   })
@@ -120,17 +118,19 @@ document.querySelectorAll('.q').forEach(el=>{
 })
 
 
-modifiedHeader = header.replace(/%NAME1%/g, `Home`)
-modifiedHeader = modifiedHeader.replace(/%HREF1%/g, `../HomePage/index.html`)
-modifiedHeader = modifiedHeader.replace(/%NAME2%/g, `Products`)
-modifiedHeader = modifiedHeader.replace(/%HREF2%/g, `../AllProducts/index.html`)
-modifiedHeader = modifiedHeader.replace(/%NAME3%/g, `My Products`)
-modifiedHeader = modifiedHeader.replace(/%HREF3%/g, `../UserProducts/index.html`)
-modifiedHeader = modifiedHeader.replace(/%NAME4%/g, `My Details`)
-modifiedHeader = modifiedHeader.replace(/%HREF4%/g, `../UserInfo/index.html`)
-modifiedHeader = modifiedHeader.replace(/%NAME5%/g, `Add Products`)
-modifiedHeader = modifiedHeader.replace(/%HREF5%/g, `../UploadProducts/index.html`)
-modifiedHeader = modifiedHeader.replace(/%NAME6%/, `Forgot Password`)
-modifiedHeader = modifiedHeader.replace(/%HREF6%/, `../ForgotPassword/index.html`)
-document.body.insertAdjacentHTML('afterbegin', modifiedHeader)
-document.body.insertAdjacentHTML('beforeend', footer)
+modifiedHeader = header.replace(/%NAME1%/g, `Home`);
+modifiedHeader = modifiedHeader.replace(/%HREF1%/g, `../HomePage/index.html`);
+modifiedHeader = modifiedHeader.replace(/%NAME2%/g, `Products`);
+modifiedHeader = modifiedHeader.replace(/%HREF2%/g, `../AllProducts/index.html`);
+modifiedHeader = modifiedHeader.replace(/%NAME3%/g, `My Products`);
+modifiedHeader = modifiedHeader.replace(/%HREF3%/g, `../UserProducts/index.html`);
+modifiedHeader = modifiedHeader.replace(/%NAME4%/g, `My Details`);
+modifiedHeader = modifiedHeader.replace(/%HREF4%/g, `../UserInfo/index.html`);
+modifiedHeader = modifiedHeader.replace(/%NAME5%/g, `Add Products`);
+modifiedHeader = modifiedHeader.replace(/%HREF5%/g, `../UploadProducts/index.html`);
+modifiedHeader = modifiedHeader.replace(/%NAME6%/, `Forgot Password`);
+modifiedHeader = modifiedHeader.replace(/%HREF6%/, `../ForgotPassword/index.html`);
+document.body.insertAdjacentHTML('afterbegin', modifiedHeader);
+document.body.insertAdjacentHTML('beforeend', footer);
+
+
