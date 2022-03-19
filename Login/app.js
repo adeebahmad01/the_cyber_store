@@ -37,6 +37,7 @@ const checkPassword = (input, i, array)=>{
     loginElements.passRes.innerHTML = 'Incorrect password'
     return false
   }
+  window.location.href = "https://adeebahmad01.github.io/the_cyber_store"
   return true
 }
 
